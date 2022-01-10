@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="clean_user" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="akxycont" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="23MlVp2ZZbu8FplBkXG9E6VnojN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RedisHelper">
+    <option name="connections">
+      <list>
+        <ConnectionInfo>
+          <option name="global" value="false" />
+          <option name="id" value="244ba9e2-f6d4-45fa-93cd-6c67ce80c228" />
+          <option name="name" value="Fathat101Redis" />
+          <option name="password" value="redisrocker" />
+          <option name="port" value="6379" />
+          <option name="url" value="localhost" />
+        </ConnectionInfo>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="starwars-api" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="starwars-api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        </ENTRIES>
+      </EXTENSION>
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.starwars-api" />
+        <item itemvalue="Python.starwars-api" />
+        <item itemvalue="Python.starwars-api" />
+        <item itemvalue="Python.starwars-api" />
+        <item itemvalue="Python.starwars-api" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="" />
+      <created>1641551864452</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1641551864452</updated>
+      <workItem from="1641551865526" duration="2501000" />
+      <workItem from="1641561089066" duration="722000" />
+      <workItem from="1641562022577" duration="621000" />
+      <workItem from="1641622711063" duration="570000" />
+      <workItem from="1641710233720" duration="20571000" />
+      <workItem from="1641755150304" duration="76000" />
+      <workItem from="1641755335115" duration="613000" />
+      <workItem from="1641759524391" duration="533000" />
+      <workItem from="1641788322766" duration="445000" />
+      <workItem from="1641794887654" duration="623000" />
+      <workItem from="1641806850983" duration="37000" />
+      <workItem from="1641810405525" duration="544000" />
+      <workItem from="1641811945994" duration="17000" />
+      <workItem from="1641811969318" duration="23000" />
+      <workItem from="1641812134764" duration="345000" />
+      <workItem from="1641812561127" duration="1538000" />
+      <workItem from="1641824499265" duration="800000" />
+    </task>
+    <task id="LOCAL-00001" summary="Chez's Working Branch">
+      <created>1641553763873</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1641553763873</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fixed the change for comparing access roles I made this morning">
+      <created>1641561611814</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1641561611814</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Changed access for films/v1/ back to basic">
+      <created>1641561765921</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1641561765921</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changed access for films/v1/ back to basic">
+      <created>1641562264582</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562264582</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changed access for films/v1/ back to basic">
+      <created>1641562311215</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562311215</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changed access for films/v1/ back to basic">
+      <created>1641562427610</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562427610</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added argon2-cffi">
+      <created>1641653968453</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1641653968453</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Tried to make the JWT more flexible by using all the possible secrets for encoding and verifying tokens.&#10;Updated verify_payload with appropriate claims&#10;Updated select_secret to use appropriate secrets&#10;Removed Auth decorators as they`re not used.&#10;Changed variable payload_extras to payload_claim&#10;Introduced 'standard_claim' for a default JWT token&#10;Updated the endpoint for email verification&#10;Updated required imports in UserDacc&#10;Updated Requirements.txt&#10;Various other bits, tidying etc.">
+      <created>1641730494080</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1641730494081</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Revoke the email verification token after verification">
+      <created>1641738299355</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1641738299355</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Removed unused user folders">
+      <created>1641759748985</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641759748985</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Removed unused user folders">
+      <created>1641812705120</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1641812705120</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Initial Commit">
+      <created>1641824721022</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1641824721022</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="Chez's Working Branch" />
+    <MESSAGE value="Fixed the change for comparing access roles I made this morning" />
+    <MESSAGE value="Changed access for films/v1/ back to basic" />
+    <MESSAGE value="Added argon2-cffi" />
+    <MESSAGE value="Tried to make the JWT more flexible by using all the possible secrets for encoding and verifying tokens.&#10;Updated verify_payload with appropriate claims&#10;Updated select_secret to use appropriate secrets&#10;Removed Auth decorators as they`re not used.&#10;Changed variable payload_extras to payload_claim&#10;Introduced 'standard_claim' for a default JWT token&#10;Updated the endpoint for email verification&#10;Updated required imports in UserDacc&#10;Updated Requirements.txt&#10;Various other bits, tidying etc." />
+    <MESSAGE value="Revoke the email verification token after verification" />
+    <MESSAGE value="Removed unused user folders" />
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1641732299162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

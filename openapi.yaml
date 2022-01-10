@@ -1,0 +1,1190 @@
+openapi: 3.0.0
+
+info:
+  title: "{{title}}"
+  version: "1.0.0"
+
+
+# Avoid having a definitive base path here. Set the path in the actual paths - facilitate versions
+# Example v1.0.0/login and v1.0.2 can both be specified
+
+servers:
+  - url: http://localhost:5000/
+    description: relative path example
+
+paths:
+
+# -----------------------------------------------
+# Character paths - REQUESTS
+# -----------------------------------------------
+
+  /character/v1/{character_id}:
+
+    get:
+      summary: Retrieve a specific star wars characters - Requires login.
+      tags:
+        - Character
+      description: >
+
+        Required Headers:
+
+            Authorization request header
+
+              Bearer Valid Admin Access Token
+
+        Errors:
+
+            token-invalid, 401
+            authorisation-required, 401
+            not-found, 404
+
+      operationId: characters.v1.endpoints.get_character
+      parameters:
+        - name: "character_id"
+          description: Character Unique id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "options"
+          in: query
+          description: Optional Character Data
+          required: false
+          style: deepObject
+          schema:
+            $ref: '#/components/schemas/CharacterExtras'
+      responses:
+        '200':
+          description: Returns a data object containing a Character's data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterResponse'
+
+#      security:
+#        - jwt: []
+
+  /characters/v1/:
+
+    get:
+      summary: Retrieve a list of star wars characters - Requires login.
+      tags:
+        - Characters
+      description: >
+
+        Required Headers:
+
+            Authorization request header
+
+              Bearer Valid Admin Access Token
+
+        Errors:
+
+            token-invalid, 401
+            authorisation-required, 401
+            not-found, 404
+
+      operationId: characters.v1.endpoints.get_characters
+      parameters:
+        - name: sort_by
+          in: query
+          description: Property to sort by
+          schema:
+            type: string
+        - $ref: '#/components/parameters/SortOrder'
+        - name: "options"
+          in: query
+          description: Optional Character Data
+          required: false
+          style: deepObject
+          schema:
+            $ref: '#/components/schemas/CharacterExtras'
+
+        - $ref: '#/components/parameters/MaxItems'
+        - $ref: '#/components/parameters/BatchSize'
+#        - in: query
+#          name: filter
+#          description: Property to filter
+#          schema:
+#            type: string
+
+
+        - $ref: '#/components/parameters/Filters'
+
+      responses:
+        '200':
+          description: Returns a data object containing a list of Characters entities and next_page object with the next_page to get or None
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterListResponse'
+
+#      security:
+#        - jwt: []
+
+# -----------------------------------------------
+# Character paths - REQUESTS
+# -----------------------------------------------
+
+  /film/v1/{film_id}:
+
+    get:
+      summary: Retrieve a specific star wars film data set - Requires login.
+      tags:
+        - Film
+      description: >
+
+        Required Headers:
+
+            Authorization request header
+
+              Bearer Valid Admin Access Token
+
+        Errors:
+
+            token-invalid, 401
+            authorisation-required, 401
+            not-found, 404
+
+      operationId: films.v1.endpoints.get_film
+      parameters:
+        - name: "film_id"
+          description: Films Unique id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "options"
+          in: query
+          description: Optional Film Data
+          required: false
+          style: deepObject
+          schema:
+            $ref: '#/components/schemas/FilmExtras'
+      responses:
+        '200':
+          description: Returns a data object containing a Films data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilmResponse'
+
+#      security:
+#        - jwt: []
+
+  /films/v1/:
+
+    get:
+      summary: Retrieve a list of star wars films - Requires login.
+      tags:
+        - Films
+      description: >
+
+        Required Headers:
+
+            Authorization request header
+
+              Bearer Valid Admin Access Token
+
+        Errors:
+
+            token-invalid, 401
+            authorisation-required, 401
+            not-found, 404
+
+      operationId: films.v1.endpoints.get_films
+      parameters:
+        - name: "options"
+          in: query
+          description: Optional Film Data
+          required: false
+          style: deepObject
+          schema:
+            $ref: '#/components/schemas/FilmExtras'
+        - $ref: '#/components/parameters/MaxItems'
+        - $ref: '#/components/parameters/BatchSize'
+
+      responses:
+        '200':
+          description: Returns a data object containing a list of Film entities and next_page object with the next_page to get or None
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilmListResponse'
+
+      security:
+        - jwt: []
+
+# -----------------------------------------------
+# AUTHENTICATION AND USER PATHS
+# -----------------------------------------------
+
+  /users/v1/{user_id}:
+
+    get:
+      summary: Returns the current users's entity object
+      tags:
+        - Users
+      description: >
+
+        Returns a user entity object from a valid user id
+
+        Required Headers:
+
+            Authorization request header
+
+            Bearer Valid Token
+
+        Errors:
+
+            'token-invalid', 401
+            'authorisation-required', 401
+
+            'not-found', 404
+            'forbidden', 404
+
+      operationId: users.v1.endpoints.get_user
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns a data object containing a user's entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+
+    delete:
+      summary: Deletes a user's account
+      tags:
+        - Users
+      description: >
+
+        Required Headers:
+
+          Authorization request header
+
+            Bearer Valid Token
+
+        Errors:
+
+            'token-invalid', 401
+            'authorisation-required', 401
+
+            'not-found', 404
+            'forbidden', 404
+
+      operationId: users.v1.endpoints.delete_account
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns status ‘ok’
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityIdResponse'
+
+    put:
+      summary: Update a user's entity
+      tags:
+      - Users
+      description: >
+
+
+        Updates a user's entity
+
+
+        Required Headers:
+
+
+            Authorization request header
+
+            Bearer Valid Token
+
+
+        Body Parameters:
+
+            At least one property from the Model - See Model
+
+        Errors:
+
+            'token-invalid', 401
+            'authorisation-required', 401
+
+            'user-not-found', 404
+            'forbidden', 404
+            'email-invalid', 400
+            'signup-code-invalid', 400
+
+      operationId: users.v1.endpoints.update
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update Data
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Returns a data object containing a user's entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+
+#  /users/v1:
+#    get:
+#      summary: Attempt to retrieve a list of user entities - Requires Admin Permissions!
+#      tags:
+#      - Users
+#      description: >
+#
+#
+#        Returns a list of user entity objects
+#
+#
+#        Required Headers:
+#
+#
+#            Authorization request header
+#
+#            Bearer Valid Admin Access Token
+#
+#        Errors:
+#
+#            'token-invalid', 401
+#            'authorisation-required', 401
+#
+#            'users-not-found', 404
+#
+#      operationId: users.v1.endpoints.list_users
+#      responses:
+#        '200':
+#          description: Returns a data object containing a list of user entities and next_page object with the next_page to get or None
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/UserListResponse'
+
+  /users/v1/signup:
+    post:
+      summary: Signup up a new user
+      tags:
+        - Users
+      description: >
+        
+        Errors:
+        
+            password-invalid, 400
+            email-invalid, 400
+            user-already-exists, 400
+
+      operationId: users.v1.endpoints.signup
+      requestBody:
+        description: Signup Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignup'
+
+      responses:
+        '200':
+          description: Returns a success Response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /users/v1/login:
+    post:
+      summary: Login with user's credentials
+      tags:
+        - Users
+      description: >
+        
+        Errors:
+        
+            not-found, 404
+            password-invalid, 400
+            email-invalid, 400
+            account-disabled, 400
+
+      operationId: users.v1.endpoints.login
+      requestBody:
+        description: Login Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+
+      responses:
+        '200':
+          description: Returns a JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+
+  /users/v1/logout:
+    get:
+      summary: Logout
+      tags:
+        - Users
+      description: >
+
+        Required Headers:
+
+          Authorization request header
+
+            Bearer Valid Token
+
+        Errors:
+
+            'token-invalid', 401
+            'authorisation-required', 401
+            'User NOT logged out - problem accessing token in request', 400
+
+      operationId: users.v1.endpoints.logout
+      responses:
+        '200':
+          description: Returns 'ok' or an Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+      security:
+        - jwt: []
+
+  /users/v1/email_verification:
+    get:
+      summary: Verifies user's email
+      tags:
+        - Users
+      description: >
+
+          Verifies user's email using an email-token generated when signing-up the user
+
+          Errors:
+
+              'token-invalid', 401
+              'authorisation-required', 401
+
+              'user-not-found', 404
+
+      operationId: users.v1.endpoints.email_verification
+      parameters:
+        - name: token
+          description: Email verification token generated at sign-up time
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns OK
+
+
+#  /users/v1/password_forgotten:
+#    get:
+#      summary: Sends an email with new password token to user
+#      tags:
+#        - Users
+#      description: >
+#
+#          Sends a reset password  email with new password token to user.
+#
+#          Errors:
+#
+#              'user-not-found', 404
+#
+#
+#      operationId: users.v1.endpoints.forgotten_password
+#      parameters:
+#        - name: email
+#          in: query
+#          description: User's email
+#          type: string
+#          format: query
+#          required: true
+#      responses:
+#        '200':
+#          description: Returns OK
+#          content:
+#            application/json:
+#              schema:
+#                 $ref: '#/components/schemas/SuccessResponse'
+#
+#      "security": []
+
+#  /users/v1/password_change:
+#    put:
+#      summary: Changes a users's password
+#      tags:
+#        - Users
+#
+#      description: >
+#
+#        Required Headers:
+#
+#            Authorization request header
+#
+#              Bearer Valid password token
+#
+#
+#        Required Body Parameters:
+#
+#            password: New user password
+#            email: User's email address
+#
+#
+#        Errors:
+#
+#            'token-invalid', 401
+#            'authorisation-required', 401
+#
+#            'password-invalid', 400
+#            'user-not-found', 404
+#
+#      operationId: users.v1.endpoints.change_password
+#      parameters:
+#        - in: body
+#          name: auth
+#          description: New user's password
+#          schema:
+#            $ref: '#/components/schemas/Credentials'
+#
+#      responses:
+#        '200':
+#          description: Returns OK
+#          content:
+#            application/json:
+#              schema:
+#                 $ref: '#/components/schemas/SuccessResponse'
+
+#  /users/v1/password_reset/{user_id}:
+#    put:
+#      summary: Reset a users's password
+#      tags:
+#        - Users
+#      description: >
+#
+#        Required Headers:
+#
+#            Authorization request header
+#
+#              Bearer Valid Token
+#
+#        Required URL Parameters:
+#
+#            old_password: The user's old password
+#            new_password: The user's new password
+#
+#        Errors:
+#
+#            'token-invalid', 401
+#            'authorisation-required', 401
+#
+#            'password-invalid', 400
+#            'user-not-found', 404
+#
+#
+#      operationId: users.v1.endpoints.reset_password
+#      parameters:
+#        - in: path
+#          name: user_id
+#          required: true
+#          type: integer
+#        - in: body
+#          name: resetpassword
+#          description: User's old and new passwords
+#          schema:
+#            $ref: '#/components/schemas/ResetPassword'
+#      responses:
+#        '200':
+#          description: Returns OK
+#          content:
+#            application/json:
+#              schema:
+#                 $ref: '#/components/schemas/SuccessResponse'
+
+#  /users/v1/resend_email_verification/{user_id}:
+#    put:
+#      summary: Reset an email verification email to a user
+#      tags:
+#        - Users
+#      description: >
+#
+#        Required Headers:
+#
+#            Authorization request header
+#
+#              Bearer Valid Token
+#
+#        Errors:
+#
+#            'token-invalid', 401
+#            'authorisation-required', 401
+#
+#            'user-not-found', 404
+#
+#      operationId: users.v1.endpoints.resend_email_verification
+#      parameters:
+#      - in: path
+#        name: user_id
+#        required: true
+#        schema:
+#          type: integer
+#      responses:
+#        '200':
+#          description: Returns OK
+#          content:
+#            application/json:
+#              schema:
+#                 $ref: '#/components/schemas/SuccessResponse'
+
+#  /users/v1/refresh_tokens:
+#    get:
+#      summary: Generates new user access and refresh tokens
+#      tags:
+#        - Users
+#      description: >
+#
+#        Required Headers:
+#
+#          Authorization request header
+#
+#            Bearer Valid Refresh Token
+#
+#        Errors:
+#
+#          'token-invalid', 401
+#          'authorisation-required', 401
+#
+#      operationId: users.v1.endpoints.generate_new_tokens
+#      responses:
+#        '200':
+#          description: Returns a new access token (token) and a new refresh token (refresh_token)
+#          content:
+#            application/json:
+#              schema:
+#                 $ref: '#/components/schemas/TokensResponse'
+
+# -----------------------------------------------
+# COMPONENTS
+# -----------------------------------------------
+components:
+
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: auth.endpoints.decode_token
+
+  # Common Parameters
+  parameters:
+    SortOrder:
+      in: query
+      name: sort_order
+      description: Property to sort by
+      schema:
+        type: string
+        enum: ['asc', 'desc']
+        default: 'asc'
+
+    MaxItems:
+      in: query
+      name: max_items
+      description: Total number of results to return across all batches - Minium = 5
+      schema:
+        type: integer
+        minimum: 5
+        default: 10
+
+
+    BatchSize:
+      in: query
+      name: batch_size
+      description: Maximum number of results in each asynchronous call - Minium = 10
+      schema:
+        type: integer
+        minimum: 10
+        default: 10
+
+#    Filters:
+#      in: query
+#      name: filters
+#      style: deepObject
+#      description: Filter specification - 'op' is optional, see FilterOps for all operator types
+#      schema:
+#        type: array
+#        items:
+#          type: string
+
+    Filters:
+      in: query
+      name: filters
+      description: Property to filter by
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/FilterSpec'
+
+  # -----------------------------------------------
+  # SCHEMAS
+  # -----------------------------------------------
+  schemas:
+
+    FilterOps:
+      type: string
+      description: filter comparison operators
+      enum:
+        - eq
+        - lte
+        - gte
+        - lt
+        - gt
+        - in
+
+    FilterSpec:
+      type: object
+      properties:
+        filter:
+          type: string
+          description: the type of filter
+        value:
+          type: string
+          description: the value to match
+        op:
+          type: string
+          description: filter comparison operators
+          enum:
+            - eq
+            - lte
+            - gte
+            - lt
+            - gt
+            - in
+#          $ref: '#/components/schemas/FilterOps'
+
+    # -----------------------------------------------
+    # GENERIC COMPONENTS
+    # -----------------------------------------------
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusOk'
+    
+    StatusOk:
+      type: string
+      description: Api call success
+      default: ok
+      
+    EntityResponse:
+      type: object
+      description: Payload returning an entity
+      properties:
+        entity:
+          type: object
+          description: Object's entity
+
+    EntitiesResponse:
+      description: Payload returning a list of entities
+      type: array
+      items:
+        $ref: '#/components/schemas/EntityResponse'
+
+    EntityIdResponse:
+      properties:
+        id:
+          type: integer
+          description: Object's ID
+
+    Email:
+      description: Email Address
+      type: string
+      pattern: ([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+
+
+    Password:
+      description: Password
+      type: string
+      pattern: (?=\S{8,32})(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[0-9])(?=\S*)(?<!\S)\S{8,32}(?=\s|\Z)
+
+
+# -----------------------------------------------
+#  CHARACTER SCHEMAS
+# -----------------------------------------------
+
+    # -----------------------------------------------
+    #  Character DATA SCHEMAS
+    # -----------------------------------------------
+
+    BaseCharacter:
+      properties:
+        name:
+          description: Characters name
+          type: string
+        gender:
+          description: Characters gender
+          type: string
+        species:
+          description: Characters Species
+          type: string
+        homeworld:
+          description: Characters Planet
+          type: string
+        created:
+          description: When the Character was created in the Swapi database
+          type: string
+        edited:
+          description: When the Character was last edited in the Swapi database
+          type: string
+        url:
+          description: The Swapi URL to the Character
+          type: string
+
+    CharacterAttributes:
+      type: object
+      properties:
+        height:
+          description: Characters height in cm
+          type: string
+        mass:
+          description: Characters weight mass
+          type: string
+        hair_color:
+          description: Characters hair color
+          type: string
+        skin_color:
+          description: Characters skin color
+          type: string
+
+    CharacterFilms:
+      properties:
+        films:
+          description: List of films the character was in
+          type: array
+          items:
+            type: string
+
+    CharacterVehicles:
+      properties:
+        vehicles:
+          description: List of vehicles the character used
+          type: array
+          items:
+            type: string
+
+    CharacterStarships:
+      properties:
+        starships:
+          description: List of starships the character used
+          type: array
+          items:
+            type: string
+
+    # -----------------------------------------------
+    #  Character REQUEST SCHEMAS
+    # -----------------------------------------------
+    CharacterExtras:
+      type: object
+      properties:
+        attributes:
+          description: provide all character attribute data
+          type: boolean
+        films:
+          description: provide all character film data
+          type: boolean
+        starships:
+          description: provide all character starship data
+          type: boolean
+        vehicles:
+          description: provide all character vehicle data
+          type: boolean
+
+    # -----------------------------------------------
+    #  Character  RESPONSE SCHEMAS
+    # -----------------------------------------------
+
+    CharacterResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseCharacter'
+      anyOf:
+        - $ref: '#/components/schemas/CharacterAttributes'
+        - $ref: '#/components/schemas/CharacterFilms'
+        - $ref: '#/components/schemas/CharacterVehicles'
+        - $ref: '#/components/schemas/CharacterStarships'
+
+    CharacterListResponse:
+      properties:
+        characters:
+          type: array
+          items:
+            $ref: '#/components/schemas/CharacterResponse'
+
+# -----------------------------------------------
+#  FILM SCHEMAS
+# -----------------------------------------------
+
+    # -----------------------------------------------
+    #  Film DATA SCHEMAS
+    # -----------------------------------------------
+
+    BaseFilm:
+      properties:
+        title:
+          description: Film's Title
+          type: string
+        episode_id:
+          description: Films id representing it's order of creation
+          type: string
+        opening_crawl:
+          description: Films opening text
+        director:
+          description: Film Director
+        producer:
+          description: Film Producer
+          type: string
+        release_date:
+          description: Date the film was released in to Cinemas
+          type: string
+        created:
+          description: Date when record of this film was created in the database
+          type: string
+        edited:
+          description: Date when record of this film was last edited in the database
+          type: string
+        url:
+          description: The URL of the film
+          type: string
+
+    FilmCharacters:
+      properties:
+        characters:
+          description: List of urls for characters in the film
+          type: array
+          items:
+            type: string
+
+    FilmVehicles:
+      properties:
+        vehicles:
+          description: List of urls for vehicles in the film
+          type: array
+          items:
+            type: string
+
+    FilmStarships:
+      properties:
+        starships:
+          description: List of urls for starships used in the film
+          type: array
+          items:
+            type: string
+
+    FilmPlanets:
+      properties:
+        planets:
+          description: List of urls for planets in the film
+          type: array
+          items:
+            type: string
+
+    FilmSpecies:
+      properties:
+        species:
+          description: List of urls for the different species of characters in the film
+          type: array
+          items:
+            type: string
+
+    # -----------------------------------------------
+    #  Film Extras REQUEST SCHEMA
+    # -----------------------------------------------
+    FilmExtras:
+      type: object
+      properties:
+        characters:
+          description: provide film character urls
+          type: boolean
+        planets:
+          description: provide all film planet urls
+          type: boolean
+        species:
+          description: provide all film species urls
+          type: boolean
+        starships:
+          description: provide all film starship urls
+          type: boolean
+        vehicles:
+          description: provide all film vehicle urls
+          type: boolean
+
+    # -----------------------------------------------
+    #  Film RESPONSE SCHEMAS
+    # -----------------------------------------------
+
+    FilmResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseFilm'
+      anyOf:
+        - $ref: '#/components/schemas/FilmCharacters'
+        - $ref: '#/components/schemas/FilmPlanets'
+        - $ref: '#/components/schemas/FilmSpecies'
+        - $ref: '#/components/schemas/CharacterStarships'
+        - $ref: '#/components/schemas/CharacterVehicles'
+
+    FilmListResponse:
+      properties:
+        films:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilmResponse'
+        film_count:
+          description: total number of films returned
+          type: object
+        
+    # -----------------------------------------------
+    #  User REQUEST SCHEMA
+    # -----------------------------------------------
+    User:
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - properties:
+            user_id:
+              description: user's entity ID
+              type: integer
+
+    BaseUser:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+
+    BaseUserSignup:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+
+    # -----------------------------------------------
+    #  AUTH TOKEN RESPONSE SCHEMAS
+    # -----------------------------------------------
+
+    UserTokens:
+      type: object
+      properties:
+        token:
+          type: string
+          format: byte
+          description: User's 1 hour api calls token
+        refresh_token:
+          type: string
+          format: byte
+          description: User's 120 hour refresh token
+#
+#    TokensResponse:
+#      type: object
+#      properties:
+#        tokens:
+#          $ref: '#/components/schemas/UserTokens'
+#
+#    EmailTokenResponse:
+#      type: object
+#      properties:
+#        token:
+#          type: string
+#          description: An email token
+#
+#    PasswordTokenResponse:
+#      type: object
+#      properties:
+#        token:
+#          type: string
+#          description: An email token
+
+    # -----------------------------------------------
+    #  USER AND USER AUTH SCHEMAS
+    # -----------------------------------------------
+
+    UserSignup:
+      allOf:
+        - $ref: '#/components/schemas/AccessRole'
+        - $ref: '#/components/schemas/Credentials'
+
+    #  User update request data - Uses Base User Definition
+    UserUpdate:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+        - $ref: '#/components/schemas/AccessRole'
+
+    UserLoginResponse:
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        tokens:
+          $ref: '#/components/schemas/UserTokens'
+#
+#    UserListResponse:
+#      properties:
+#        users:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/User'
+#        pagination_metadata:
+#          $ref: '#/components/schemas/PaginationData'
+
+    AccessRole:
+      properties:
+        access_role:
+          description: Access role of user
+          type: string
+          enum:
+            - admin
+            - basic
+          default: basic
+
+    Credentials:
+      type: object
+      required:
+        - password
+        - email
+      properties:
+        password:
+          $ref: '#/components/schemas/Password'
+        email:
+          $ref: '#/components/schemas/Email'
+
+#    ResetPassword:
+#      type: object
+#      required:
+#        - old_password
+#        - new_password
+#      properties:
+#        old_password:
+#          $ref: '#/components/schemas/Password'
+#        new_password:
+#          $ref: '#/components/schemas/Password'
+

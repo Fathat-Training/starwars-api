@@ -1,0 +1,103 @@
+# -*- coding: utf-8 -*-
+
+# ------------------------------------------------
+#    External imports
+# ------------------------------------------------
+from mysql.connector import connect, errors
+from mysql.connector.errors import IntegrityError
+
+# ------------------------------------------------
+#    Python Imports
+# ------------------------------------------------
+import json
+
+# ------------------------------------------------
+#    Module Imports
+# ------------------------------------------------
+from errors.v1.handlers import DataAccessError
+from config.v1.app_config import MYSQL
+
+
+# ------------------------------------------------
+#     Database Connection
+# ------------------------------------------------
+
+def db_connect():
+    """
+        Connects to our database
+
+    :return:
+    """
+
+    try:
+
+        return connect(
+            host=MYSQL["host"],
+            user=MYSQL["user"],
+            password=MYSQL["password"],
+            database=MYSQL["database"]
+            )
+
+    except Exception as e:
+        # We could use an HTTP error status code of 500 or 503
+        raise DataAccessError(message="Database Connection Error", status_code=503)
+
+
+def db_insert_update(sql, values=None):
+    """
+        Calls sql on the database and
+        returns the result.
+
+    :param sql: The SQL INSERT statement
+    :param values: The values to be inserted
+    :return: The row ID
+    """
+    try:
+        db = db_connect()
+        with db.cursor() as cur:
+            if values:
+                cur.execute(sql, values)
+            else:
+                cur.execute(sql)
+        db.commit()
+        # If it's an INSERT Return the ID of the last row inserted
+        if "INSERT" in sql:
+            rid = cur.lastrowid
+            db.close()
+            return rid
+
+        return
+    except IntegrityError as e:
+        # Integrity Error normally evoked when a duplicate entry is attempted - i.e. same email address, password, etc.
+        # Check Unique columns for the database
+        raise DataAccessError(message=e.args[1], status_code=503)
+
+
+def db_query(sql, values):
+    """
+        Calls sql on the database and
+        returns the result.
+    :param sql: The SQL INSERT statement
+    :param values: The values to be inserted
+    :return:
+    """
+
+    try:
+        db = db_connect()
+        with db.cursor() as cur:
+            # Extract row headers
+            cur.execute(sql, values)
+            headers = [x[0] for x in cur.description]
+            return db_json_result(cur.fetchall(), headers)
+    except Exception as e:
+        raise DataAccessError(message=e.args[1], status_code=503)
+
+
+def db_json_result(data, headers):
+    json_data = []
+    for result in data:
+        try:
+            json_data.append(dict(zip(headers, result)))
+        except TypeError:
+            json_data.append(dict(zip(headers, str(result))))
+    return json_data
