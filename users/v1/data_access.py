@@ -16,7 +16,7 @@ from errors.v1.handlers import DataAccessError
 from auth.validators import check_password
 from auth.core import generate_jwt
 from config.v1.app_config import JWT_ACCESS_HOURS, JWT_REFRESH_HOURS, JWT_EMAIL_HOURS
-from database.mysql.db_utils import db_insert_update, db_query
+from database.mysql.db_utils import db_insert_update, db_query, db_delete
 from database.redis.rd_utils import redis_connection
 from utils import dict_excludes, send_email
 
@@ -138,7 +138,7 @@ class UserDacc(object):
         if check_password(password, user['password']):
             return user
         else:
-            raise DataAccessError(message='forbidden', status_code=404)
+            raise DataAccessError(message='forbidden', status_code=403)
 
     @staticmethod
     def get_by_email(email):
@@ -170,6 +170,17 @@ class UserDacc(object):
         """
         sql = "SELECT id FROM users WHERE email = %s"
         values = (email,)
+        return len(db_query(sql, values)) > 0
+
+    @staticmethod
+    def user_exists_by_id(user_id):
+        """
+            Returns True if there is an existing user with the given ID
+        :param email: User ID to check if exists
+        :return: True iff the user with given ID exists
+        """
+        sql = "SELECT id FROM users WHERE id = %s"
+        values = (user_id,)
         return len(db_query(sql, values)) > 0
 
     @staticmethod
@@ -270,6 +281,19 @@ class UserDacc(object):
                              hours=JWT_EMAIL_HOURS)
         return token
 
+    @staticmethod
+    def delete_user(user_id):
+        """
+            Delete a user.
+        :param user_id: ID of the user
+        """
+        sql = "DELETE FROM users WHERE id = %s"
+        values = (str(user_id),)
+        num_deleted = db_delete(sql, values)
+        print(f"deleted row count={num_deleted}")
+        if num_deleted == 0:
+            raise DataAccessError(message="not-found", status=404)
+
     # @staticmethod
     # def revoke_refresh_token(user_id):
     #     """
@@ -321,17 +345,6 @@ class UserDacc(object):
     #     :return: True
     #     :errors:
     #         'user-not-found', 404
-    #     """
-    #     pass
-    #
-    # @staticmethod
-    # def delete_account(user_id):
-    #     """
-    #         Soft Delete user's entity
-    #         better to do this as a task/cron
-    #
-    #     :param user_id:
-    #     :return:
     #     """
     #     pass
     #

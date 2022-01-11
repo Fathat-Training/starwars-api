@@ -241,7 +241,7 @@ paths:
             'authorisation-required', 401
 
             'not-found', 404
-            'forbidden', 404
+            'forbidden', 403
 
       operationId: users.v1.endpoints.get_user
       parameters:
@@ -276,7 +276,7 @@ paths:
             'authorisation-required', 401
 
             'not-found', 404
-            'forbidden', 404
+            'forbidden', 403
 
       operationId: users.v1.endpoints.delete_account
       parameters:
@@ -321,7 +321,7 @@ paths:
             'authorisation-required', 401
 
             'user-not-found', 404
-            'forbidden', 404
+            'forbidden', 403
             'email-invalid', 400
             'signup-code-invalid', 400
 

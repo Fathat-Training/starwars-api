@@ -235,17 +235,29 @@ def suspend(token_info, resident_id, **kwargs):
 
 def delete_account(token_info, user_id, **kwargs):
     """
-        Delete a user if and only if it is the current user
-        Used by users to delete their own account
+        Delete a user account.
+        Users cannot delete their own account; only admins can delete an account
         TODO - when deleting a user we must delete all other data in other model entities
 
     :param token_info: contains token payload
     :param user_id:
-    :return: SuccessResponse
+    :return: SuccessResponse with deleted user's id
     :errors:
         'user-not-found' 404
     """
-    permission(token_info, access_role='admin', logout=True)
+    permission(token_info, access_role='admin')
+
+    # Do not allow admins to delete their own accounts, let other admins to that.
+    if user_id == token_info['user_id']:
+        raise ApiError(message="forbidden", status_code=403)
+
+    try:
+        if not UserDacc.user_exists_by_id(user_id):
+            raise ApiError(message="not-found", status_code=404)
+        UserDacc.delete_user(user_id)
+        return api_response({'id': user_id})
+    except DataAccessError as e:
+        raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
 
 
 def get_user(user_id, **kwargs):

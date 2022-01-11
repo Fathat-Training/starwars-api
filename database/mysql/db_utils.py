@@ -77,8 +77,8 @@ def db_query(sql, values):
     """
         Calls sql on the database and
         returns the result.
-    :param sql: The SQL INSERT statement
-    :param values: The values to be inserted
+    :param sql: The SQL statement
+    :param values: The values to be substituted in the SQL query
     :return:
     """
 
@@ -101,3 +101,22 @@ def db_json_result(data, headers):
         except TypeError:
             json_data.append(dict(zip(headers, str(result))))
     return json_data
+
+def db_delete(sql, values):
+    """
+        Calls sql on the database for deleting rows
+    :param sql: The SQL DELETE statement
+    :param values: The values to be substituted in
+    :return: The number of rows deleted
+    """
+    assert "DELETE" in sql, "db_delete should be called only with DELETE statements"
+    try:
+        db = db_connect()
+        with db.cursor() as cur:
+            cur.execute(sql, values)
+            deleted_row_count = cur.rowcount
+        db.commit()
+        db.close()
+        return deleted_row_count
+    except Exception as e:
+        raise DataAccessError(message=e.args[1], status_code=503)
