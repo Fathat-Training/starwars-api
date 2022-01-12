@@ -28,9 +28,9 @@ def user_model():
 
     :return: string containing MySql user table creation statement
     """
-    return "(id int NOT NULL AUTO_INCREMENT, email VARCHAR(255), password VARCHAR(255), refresh_token VARCHAR(255), " \
+    return "(id int NOT NULL AUTO_INCREMENT, email VARCHAR(255), password VARCHAR(255), refresh_token VARCHAR(1024), " \
            "access_role VARCHAR(10), created DATETIME default now(), disabled BOOLEAN, email_verified BOOLEAN, " \
-            "CONSTRAINT UC_user UNIQUE (id,email,password, refresh_token))"
+            "CONSTRAINT UC_user UNIQUE (id,email,password))"
 
 
 def create_user_table(db_connection):
