@@ -88,12 +88,14 @@ class StarWars(object):
             params: batch_size: The maximum items returned across all batches/api calls
         """
         # Create the initial url
-        urls = [f"{URL}{query}/"]
+        urls = []
         urls_append = urls.append
 
         if max_items and batch_size:
-            for i in range(2, round(max_items / batch_size) + 1):
-                urls_append(f"{URL}{query}/?format=json&page={i}")
+            for i in range(1, round(max_items / batch_size) + 1):
+                urls_append(f"{URL}{query}/?page={i}")
+        else:
+            urls.append(f"{URL}{query}/")
 
         # Call the api query function
         asyncio.run(self.api_query(urls))
