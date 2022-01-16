@@ -91,7 +91,7 @@ class StarWars(object):
         urls = []
         urls_append = urls.append
 
-        if max_items and batch_size:
+        if max_items and batch_size and max_items > batch_size:
             for i in range(1, round(max_items / batch_size) + 1):
                 urls_append(f"{URL}{query}/?page={i}")
         else:
