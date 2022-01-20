@@ -256,6 +256,8 @@ def verify_email_token(token):
 
         return payload
 
+    return False
+
 
 def select_secret(payload):
     """

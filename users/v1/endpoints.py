@@ -132,12 +132,13 @@ def email_verification(**kwargs):
     :errors:
         'authorisation-required' 401
     """
-    if "token" in kwargs:
-        payload = verify_email_token(kwargs['token'])
-        UserDacc.verify_email(payload['user_id'], payload['email_claim'])
-        revoke_auth_token(kwargs['token'])
-        return api_response()
-    else:
+    try:
+        if "token" in kwargs:
+            payload = verify_email_token(kwargs['token'])
+            UserDacc.verify_email(payload['user_id'], payload['email_claim'])
+            revoke_auth_token(kwargs['token'])
+            return api_response()
+    except Exception:
         raise ApiError('authorisation-required', status_code=401)
 
 

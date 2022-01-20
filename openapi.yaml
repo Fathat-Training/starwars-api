@@ -9,7 +9,7 @@ info:
 # Example v1.0.0/login and v1.0.2 can both be specified
 
 servers:
-  - url: http://localhost:5000/
+  - url: http://127.0.0.1:5003/
     description: relative path example
 
 paths:
@@ -392,6 +392,7 @@ paths:
             password-invalid, 400
             email-invalid, 400
             user-already-exists, 400
+            unsupported media type, 415
 
       operationId: users.v1.endpoints.signup
       requestBody:
@@ -1076,14 +1077,6 @@ components:
 
     BaseUser:
       type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/Email'
-
-    BaseUserSignup:
-      type: object
-      required:
-        - email
       properties:
         email:
           $ref: '#/components/schemas/Email'
