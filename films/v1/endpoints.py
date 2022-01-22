@@ -31,7 +31,7 @@ from films.v1.data_access import *
 
 
 # ------------------------------------------------
-#          CHARACTER REST FUNCTIONS START HERE
+#          FILM REST FUNCTIONS START HERE
 # ------------------------------------------------
 
 def get_film(film_id, **kwargs):
@@ -44,7 +44,7 @@ def get_film(film_id, **kwargs):
     """
     try:
         film = FilmDacc.film(film_id, kwargs['options'])
-        return api_response({'film': film})
+        return api_response(film)
     except DataAccessError as e:
         raise ApiError(e.message, e.status_code, e.payload)
 
@@ -61,14 +61,13 @@ def get_films(**kwargs):
     :return: List of Film Entities and total film count
     :errors:
     """
-    permission(kwargs['token_info'], access_role='basic')
+    # permission(kwargs['token_info'], access_role='basic')
     films, count = FilmDacc.films(kwargs['options'], kwargs['max_items'], kwargs['batch_size'])
 
     if films:
         return api_response({
-            'films': films,
-            'film_count': count
+            'results': films,
+            'count': count
         })
-
     else:
         raise ApiError('films-not-found', status_code=404)

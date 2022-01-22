@@ -30,14 +30,13 @@ def api_response(payload=None):
     :return:
     """
     if isinstance(payload, dict):
-
         # If something in dict return with data else just status
         if len(payload) > 0:
-            return {'data': payload, 'status': 'ok'}
+            return payload
         else:
-            return {'status': 'ok'}
+            return {}
     else:
-        return {'status': 'ok'}
+        return {}
 
 
 

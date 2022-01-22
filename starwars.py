@@ -21,7 +21,8 @@ from errors.v1.handlers import DataAccessError
 # ------------------------------------------------
 #    Script Wide Variables
 # ------------------------------------------------
-URL = 'https://swapi.dev/api/'
+# URL = 'https://swapi.dev/api/'
+URL = 'https://swapi.py4e.com/api/'
 
 # ------------------------------------------------
 #          CLASSES START HERE
