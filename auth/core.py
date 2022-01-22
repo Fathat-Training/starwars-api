@@ -23,7 +23,8 @@ from auth.schemas import access_roles
 # ----------------------------
 from errors.v1.handlers import ApiError
 from config.v1.app_config import JWT_SECRET, JWT_EMAIL_SECRET, JWT_REFRESH_SECRET, JWT_PASSWORD_SECRET, JWT_BASIC_PAYLOAD_CLAIM, \
-    JWT_EMAIL_PAYLOAD_CLAIM, JWT_PASSWORD_PAYLOAD_CLAIM, JWT_REFRESH_PAYLOAD_CLAIM, JWT_ISSUER, JWT_ALGORITHM
+    JWT_EMAIL_PAYLOAD_CLAIM, JWT_PASSWORD_PAYLOAD_CLAIM, JWT_REFRESH_PAYLOAD_CLAIM, JWT_ISSUER, JWT_ALGORITHM, \
+    JWT_ACCESS_HOURS, JWT_REFRESH_HOURS, JWT_EMAIL_HOURS, JWT_PASSWORD_HOURS
 from database.redis.rd_utils import redis_connection
 
 # ----------------------------
@@ -61,24 +62,41 @@ def generate_jwt(**kwargs):
         :param kwargs:
         :return: usage payload
         """
+        payload = {}
 
         try:
-            hours = kwargs.get('hours') or 1
 
-            payload = {
+            # payload_claim states the kind of claim i.e. standard_claim, refresh_claim, email_claim, password_claim etc
+            if kwargs.get('payload_claim') and isinstance(kwargs['payload_claim'], dict):
+
+                claims = kwargs['payload_claim']
+
+                if kwargs.get('hours'):
+                    hours = kwargs.get('hours')
+                elif claims.get('standard_claim'):
+                    hours = JWT_ACCESS_HOURS
+                elif claims.get('refresh_claim'):
+                    hours = JWT_REFRESH_HOURS
+                elif claims.get('email_claim'):
+                    hours = JWT_EMAIL_HOURS
+                elif claims.get('password_claim'):
+                    hours = JWT_PASSWORD_HOURS
+                else:
+                    raise Exception
+
+                payload.update(kwargs['payload_claim'])
+
+            else:
+                raise ApiError('invalid-token', status_code=401)
+
+            payload.update({
                 'iss': JWT_ISSUER,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=hours),
                 'iat': datetime.datetime.utcnow(),
                 'sub': str(uuid.uuid4()),
                 'access_role': kwargs['access_role'],
-                'user_id': kwargs['user_id'],
-            }
-
-            # payload_claim states the kind of claim i.e. standard_claim, refresh_claim, email_claim, password_claim etc
-            if kwargs.get('payload_claim') and isinstance(kwargs['payload_claim'], dict):
-                payload.update(kwargs['payload_claim'])
-            else:
-                raise ApiError('invalid-token', status_code=401)
+                'user_id': kwargs['user_id']
+            })
 
             # get the secret
             if select_secret(payload):

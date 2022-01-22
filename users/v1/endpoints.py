@@ -58,7 +58,7 @@ def signup(**kwargs):
         user = UserDacc.get_by_email(data['email'])
         UserDacc.send_verification_email(user)
 
-        return api_response({})
+        return api_response()
 
     except DataAccessError as e:
         raise ApiError(e.message, e.status_code, e.payload)
@@ -207,7 +207,7 @@ def update(user_id, **kwargs):
 def generate_new_tokens(**kwargs):
     """
         Generates new API usage and refresh tokens
-        Generally when a client's access token has epired they can request a
+        Generally when a client's access token has expired they can request a
         new set of tokens be generated as long as they have the correct unexpired
         refresh token.
 
@@ -216,13 +216,16 @@ def generate_new_tokens(**kwargs):
     :errors:
         'unknown-user' 404
     """
-    pass
+    try:
+        token, refresh_token = UserDacc.generate_new_tokens(kwargs['token_info']['user_id'], kwargs['token_info']['access_role'])
+        return api_response({'token': token, 'refresh_token': refresh_token, 'user': kwargs['token_info']['user_id']})
+    except DataAccessError as e:
+        raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
 
 
 def suspend(token_info, resident_id, **kwargs):
     """
-        Delete a resident
-        TODO - when deleting a resident ensure to delete all other relevant data in related model entities
+        Suspend aka diable a user
 
     :param token_info: contains token payload
     :param resident_id:
@@ -230,7 +233,7 @@ def suspend(token_info, resident_id, **kwargs):
     :errors:
         'user-not-found' 404
     """
-    permission(token_info, access_role='admin')
+    permission(token_info, access_role='user')
 
 
 def delete_account(token_info, user_id, **kwargs):

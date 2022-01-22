@@ -15,7 +15,6 @@ from datetime import datetime
 from errors.v1.handlers import DataAccessError
 from auth.validators import check_password
 from auth.core import generate_jwt
-from config.v1.app_config import JWT_ACCESS_HOURS, JWT_REFRESH_HOURS, JWT_EMAIL_HOURS
 from database.mysql.db_utils import db_insert_update, db_query, db_delete
 from database.redis.rd_utils import redis_connection
 from utils import dict_excludes, send_email
@@ -72,11 +71,8 @@ class UserDacc(object):
         if not user['disabled']:
 
             if user['email_verified']:
-                # Generate access token
-                token = UserDacc.get_token(user_id=user['id'], access_role=user['access_role'],payload_claim={'standard_claim': True}, hours=JWT_ACCESS_HOURS)
-
-                # We always generate a new refresh token on login and kill the old one
-                refresh_token = UserDacc.get_refresh_token(user['id'], user['access_role'])
+                # Generate new access and refresh tokens
+                token, refresh_token = UserDacc.generate_new_tokens(user['id'], user['access_role'])
 
                 if user['refresh_token']:
                     # Add the old refresh token to some kind of cache (In this case Redis) so
@@ -264,8 +260,29 @@ class UserDacc(object):
         :param access_role: Users access role
         :return: new refresh token
         """
-        token = generate_jwt(user_id=uid, access_role=access_role,payload_claim={'refresh_claim': True}, hours=JWT_REFRESH_HOURS)
+        token = generate_jwt(user_id=uid, access_role=access_role,payload_claim={'refresh_claim': True})
         return token
+
+    @staticmethod
+    def generate_new_tokens(uid, access_role):
+        """
+            Generate a new standard token and a new refresh token.
+
+        :param uid: User's ID passed from client
+        :param access_role: User's access_role passed from client
+        """
+        try:
+
+            user = UserDacc.get_by_id(uid)
+
+            if user['access_role'] == access_role:
+                token = UserDacc.get_token(user_id=uid, access_role=access_role, payload_claim={'standard_claim': True})
+                refresh_token = UserDacc.get_refresh_token(uid, access_role)
+
+                return token, refresh_token
+
+        except Exception as e:
+            raise e
 
     @staticmethod
     def get_email_token(user_id, access_role, user_email):
@@ -277,8 +294,7 @@ class UserDacc(object):
         :user_email: User's email address
         :return: new email token
         """
-        token = generate_jwt(user_id=user_id, access_role=access_role, payload_claim={'email_claim': user_email},
-                             hours=JWT_EMAIL_HOURS)
+        token = UserDacc.get_token(user_id=user_id, access_role=access_role, payload_claim={'email_claim': user_email})
         return token
 
     @staticmethod

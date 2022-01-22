@@ -126,7 +126,7 @@ paths:
 # Character paths - REQUESTS
 # -----------------------------------------------
 
-  /film/v1/{film_id}:
+  /films/v1/{film_id}:
 
     get:
       summary: Retrieve a specific star wars film data set - Requires login.
@@ -212,8 +212,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FilmListResponse'
 
-      security:
-        - jwt: []
+#      security:
+#        - jwt: []
 
 # -----------------------------------------------
 # AUTHENTICATION AND USER PATHS
@@ -658,32 +658,37 @@ paths:
 #              schema:
 #                 $ref: '#/components/schemas/SuccessResponse'
 
-#  /users/v1/refresh_tokens:
-#    get:
-#      summary: Generates new user access and refresh tokens
-#      tags:
-#        - Users
-#      description: >
-#
-#        Required Headers:
-#
-#          Authorization request header
-#
-#            Bearer Valid Refresh Token
-#
-#        Errors:
-#
-#          'token-invalid', 401
-#          'authorisation-required', 401
-#
-#      operationId: users.v1.endpoints.generate_new_tokens
-#      responses:
-#        '200':
-#          description: Returns a new access token (token) and a new refresh token (refresh_token)
-#          content:
-#            application/json:
-#              schema:
-#                 $ref: '#/components/schemas/TokensResponse'
+  /users/v1/generate_tokens:
+    get:
+      summary: Generates new user access and refresh tokens
+      tags:
+        - Users
+      description: >
+
+        Required Headers:
+
+          Authorization request header
+
+            Bearer Valid Refresh Token
+
+        Errors:
+
+          'token-invalid', 401
+          'authorisation-required', 401
+          'user-not-found', 404
+
+      operationId: users.v1.endpoints.generate_new_tokens
+
+      responses:
+        '200':
+          description: Returns a new access token (token) and a new refresh token (refresh_token)
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/UserTokens'
+
+      security:
+        - jwt: []
 
 # -----------------------------------------------
 # COMPONENTS
@@ -1044,7 +1049,6 @@ components:
     # -----------------------------------------------
 
     FilmResponse:
-      type: object
       allOf:
         - $ref: '#/components/schemas/BaseFilm'
       anyOf:
@@ -1056,11 +1060,11 @@ components:
 
     FilmListResponse:
       properties:
-        films:
+        results:
           type: array
           items:
             $ref: '#/components/schemas/FilmResponse'
-        film_count:
+        count:
           description: total number of films returned
           type: object
         
@@ -1091,12 +1095,12 @@ components:
         token:
           type: string
           format: byte
-          description: User's 1 hour api calls token
+          description: User's api calls token
         refresh_token:
           type: string
           format: byte
-          description: User's 120 hour refresh token
-#
+          description: User's refresh token
+
 #    TokensResponse:
 #      type: object
 #      properties:
@@ -1134,11 +1138,12 @@ components:
         - $ref: '#/components/schemas/AccessRole'
 
     UserLoginResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserTokens'
       properties:
         user:
           $ref: '#/components/schemas/User'
-        tokens:
-          $ref: '#/components/schemas/UserTokens'
+
 #
 #    UserListResponse:
 #      properties:

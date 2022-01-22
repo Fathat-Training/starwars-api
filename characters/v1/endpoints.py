@@ -46,7 +46,7 @@ def get_character(character_id, **kwargs):
 
     try:
         character = CharacterDacc.character(character_id, kwargs['options'])
-        return api_response({'character': character})
+        return api_response(character)
     except DataAccessError as e:
         raise ApiError(e.message, e.status_code, e.payload)
 
@@ -72,7 +72,7 @@ def get_characters(**kwargs):
 
     if characters:
         return api_response({
-            'characters': characters,
+            'results': characters,
             'count': count
             }
         )
