@@ -15,6 +15,7 @@
 from config.v1.app_config import SMTP
 import smtplib, ssl
 
+
 def options_filter(data, options):
     """
         Filters through a list of dictionaries or a single dictionary and removes any data from the options dict that is set to false
