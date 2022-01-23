@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="Removed unrequired if in user endpoints email_verification">
+    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/basehandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/basehandler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/characters/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/characters/v1/endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/films/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/films/v1/endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starwars.py" beforeDir="false" afterPath="$PROJECT_DIR$/starwars.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/data_access.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,6 +163,9 @@
       <workItem from="1642692706693" duration="2710000" />
       <workItem from="1642757390251" duration="2550000" />
       <workItem from="1642834157940" duration="19886000" />
+      <workItem from="1642873878246" duration="823000" />
+      <workItem from="1642920773705" duration="7000" />
+      <workItem from="1642933151495" duration="670000" />
     </task>
     <task id="LOCAL-00001" summary="Chez's Working Branch">
       <created>1641553763873</created>
@@ -269,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642678534878</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Improved the way JWT tokens are generated&#10;adjusted various return parameters in OpenAPI and associated endpoints&#10;Changed the url for the swapi service for a better one&#10;Filled out the generate_new_tokens endpoint and UserDacc function">
+      <created>1642874048707</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1642874048707</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,10 +302,11 @@
     <MESSAGE value="Removed unused user folders" />
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Removed unrequired if in user endpoints email_verification" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed unrequired if in user endpoints email_verification" />
+    <MESSAGE value="Improved the way JWT tokens are generated&#10;adjusted various return parameters in OpenAPI and associated endpoints&#10;Changed the url for the swapi service for a better one&#10;Filled out the generate_new_tokens endpoint and UserDacc function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved the way JWT tokens are generated&#10;adjusted various return parameters in OpenAPI and associated endpoints&#10;Changed the url for the swapi service for a better one&#10;Filled out the generate_new_tokens endpoint and UserDacc function" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1641732299162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1642873336696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1642874799940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
