@@ -22,7 +22,7 @@
 #    Base Handling Functions Begin Here
 # ------------------------------------------------
 
-def api_response(payload=None):
+def api_response(payload=None) -> dict:
     """
         Generate and return an appropriate response to the API request
 

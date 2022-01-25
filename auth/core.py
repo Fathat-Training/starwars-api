@@ -43,7 +43,7 @@ DEFAULT_PAYLOAD = ['iat', 'sub', 'exp']
 #  Functions
 # ----------------------------
 
-def generate_jwt(**kwargs):
+def generate_jwt(**kwargs: dict) -> str:
     """
         Generate a JWT for api call usage
 
@@ -55,7 +55,7 @@ def generate_jwt(**kwargs):
         'missing-users-id-for-token-generation' 401
     """
 
-    def gen_token(**kwargs):
+    def gen_token(**kwargs: dict) -> str:
         """
             Generates a payload
             
@@ -121,7 +121,7 @@ def generate_jwt(**kwargs):
         raise ApiError('user-not-found', status_code=401)
 
 
-def decode_auth_token(token, secret):
+def decode_auth_token(token: str, secret: str) -> dict:
     """
     Decodes the auth token
     :param secret:
@@ -139,7 +139,7 @@ def decode_auth_token(token, secret):
         raise ApiError('token-invalid', status_code=401)
 
 
-def has_expired(token, secret):
+def has_expired(token: str, secret: str):
     """
         Helper function to test if a token has expired without raising an ApiError
 
@@ -154,7 +154,7 @@ def has_expired(token, secret):
         return True
 
 
-def decode_usage_token(token):
+def decode_usage_token(token: str):
     """
         Decodes an email token
     :param token:
@@ -164,7 +164,7 @@ def decode_usage_token(token):
     return decode_auth_token(token, JWT_SECRET)
 
 
-def decode_email_token(token):
+def decode_email_token(token: str):
     """
         Decodes an email token
 
@@ -176,7 +176,7 @@ def decode_email_token(token):
     return decode_auth_token(token, JWT_EMAIL_SECRET)
 
 
-def decode_password_token(token):
+def decode_password_token(token: str):
     """
         Decodes a password token
 
@@ -188,7 +188,7 @@ def decode_password_token(token):
     return decode_auth_token(token, JWT_PASSWORD_SECRET)
 
 
-def revoke_auth_token(token):
+def revoke_auth_token(token: str):
     """
         This could be used when a user logs out.
         Save a token to redis cache.
@@ -201,7 +201,7 @@ def revoke_auth_token(token):
     redis_connection.set(token)
 
 
-def is_revoked(token):
+def is_revoked(token: str) -> bool:
     """
 
         Checks Redis cache for a revoked token. The issue here is when Redis cache fails...without a model we can't back this up.
@@ -221,7 +221,7 @@ def is_revoked(token):
     return False
 
 
-def verify_payload(payload, access_role):
+def verify_payload(payload: dict, access_role: str) -> bool:
     """
         Verify the payload against the payload claims - making sure all is present and correct
 
@@ -261,7 +261,7 @@ def verify_payload(payload, access_role):
         raise ApiError('token-invalid', status_code=401)
 
 
-def verify_email_token(token):
+def verify_email_token(token: str):
     """
         Verifies an email JWT token
     :param token:
@@ -277,7 +277,7 @@ def verify_email_token(token):
     return False
 
 
-def select_secret(payload):
+def select_secret(payload: dict) -> str | bool:
     """
         Returns a specific secret based on the contents of payload
 
@@ -296,7 +296,7 @@ def select_secret(payload):
     return False
 
 
-def permission(payload, access_role, logout=False):
+def permission(payload: dict, access_role: str, logout=False) -> bool:
     """
         Called from our endpoints prior to code access.
 

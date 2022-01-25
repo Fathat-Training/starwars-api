@@ -30,7 +30,7 @@ class CharacterDacc(object):
     """
 
     @staticmethod
-    def character(character_id, options):
+    def character(character_id: str, options) -> dict:
         """
              Retrieve a specific StarWars Character
         :param character_id:
@@ -42,7 +42,7 @@ class CharacterDacc(object):
         return options_filter(starwars.swars_data, options)[0]
 
     @staticmethod
-    def characters(kwargs):
+    def characters(kwargs: dict) -> tuple[list, int] | tuple[list[dict], int]:
         """
              Retrieve StarWars Characters
 

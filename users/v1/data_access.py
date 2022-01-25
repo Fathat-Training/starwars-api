@@ -137,7 +137,7 @@ class UserDacc(object):
             raise DataAccessError(message='forbidden', status_code=403)
 
     @staticmethod
-    def get_by_email(email):
+    def get_by_email(email: str) -> dict:
         """
             Fetch a user's entity by email address
 
@@ -157,7 +157,7 @@ class UserDacc(object):
         raise DataAccessError(message='user-not-found', status_code=404)
 
     @staticmethod
-    def user_exists_by_email(email):
+    def user_exists_by_email(email: str) -> bool:
         """
             Returns True if there is an existing user with the given email address
 
@@ -169,7 +169,7 @@ class UserDacc(object):
         return len(db_query(sql, values)) > 0
 
     @staticmethod
-    def user_exists_by_id(user_id):
+    def user_exists_by_id(user_id) -> bool:
         """
             Returns True if there is an existing user with the given ID
         :param email: User ID to check if exists
@@ -180,7 +180,7 @@ class UserDacc(object):
         return len(db_query(sql, values)) > 0
 
     @staticmethod
-    def get_by_id(id):
+    def get_by_id(id) -> dict:
         """
             Fetch a user's entity by ID
 
@@ -200,7 +200,7 @@ class UserDacc(object):
         raise DataAccessError(message='user-not-found', status_code=404)
 
     @staticmethod
-    def send_verification_email(user):
+    def send_verification_email(user: dict):
         """
             Sends verification email to the given user.
 
@@ -221,7 +221,7 @@ class UserDacc(object):
             raise DataAccessError(message="server-error", status_code=500)
 
     @staticmethod
-    def verify_email(user_id, user_email):
+    def verify_email(user_id, user_email: str):
         """
             Verifies the email of the given user by id
 
@@ -241,7 +241,7 @@ class UserDacc(object):
         db_insert_update(sql, (user_id,))
 
     @staticmethod
-    def get_token(**kwargs):
+    def get_token(**kwargs: dict) -> str:
         """
             Create a token and return
 
@@ -252,7 +252,7 @@ class UserDacc(object):
         return generate_jwt(**kwargs)
 
     @staticmethod
-    def get_refresh_token(uid, access_role):
+    def get_refresh_token(uid, access_role: str) -> str:
         """
             Create a refresh token add it to the user's entity, replacing an existing
 
@@ -264,7 +264,7 @@ class UserDacc(object):
         return token
 
     @staticmethod
-    def generate_new_tokens(uid, access_role):
+    def generate_new_tokens(uid, access_role: str):
         """
             Generate a new standard token and a new refresh token.
 
@@ -285,13 +285,13 @@ class UserDacc(object):
             raise e
 
     @staticmethod
-    def get_email_token(user_id, access_role, user_email):
+    def get_email_token(user_id, access_role: str, user_email: str):
         """
             Create an email token
 
         :param user_id: User's ID
         :param access_role: User's access role
-        :user_email: User's email address
+        :param user_email: User's email address
         :return: new email token
         """
         token = UserDacc.get_token(user_id=user_id, access_role=access_role, payload_claim={'email_claim': user_email})

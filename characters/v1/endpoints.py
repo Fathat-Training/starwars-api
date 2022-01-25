@@ -33,7 +33,7 @@ from errors.v1.handlers import ApiError, DataAccessError
 #          CHARACTER REST FUNCTIONS START HERE
 # ------------------------------------------------
 
-def get_character(character_id, **kwargs):
+def get_character(character_id, **kwargs: dict) -> dict:
     """
         Fetch a character's entity based on character's id and return
 
@@ -55,7 +55,7 @@ def get_character(character_id, **kwargs):
 #          ENDPOINT FUNCTIONS START HERE
 # ------------------------------------------------
 
-def get_characters(**kwargs):
+def get_characters(**kwargs: dict) -> dict:
     """
         Fetch all the characters via pagination. If there is a cursor then fetch the next batch of users
 

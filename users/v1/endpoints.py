@@ -26,12 +26,11 @@ from errors.v1.handlers import *
 #     REST FUNCTIONS
 # -----------------------------
 
-def signup(**kwargs):
+def signup(**kwargs: dict):
     """
         Signup a user
 
         Verify the signup
-        TODO: Ok = send email
         Not Ok = abort and return
 
     :param kwargs:
@@ -64,7 +63,7 @@ def signup(**kwargs):
         raise ApiError(e.message, e.status_code, e.payload)
 
 
-def login(**kwargs):
+def login(**kwargs: dict) -> dict:
     """
         Attempts login with users credentials, email and password
 
@@ -93,7 +92,7 @@ def login(**kwargs):
         raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
 
 
-def logout(**kwargs):
+def logout(**kwargs: dict):
     """
         Logout:
             Log the user out
@@ -123,7 +122,7 @@ def logout(**kwargs):
     raise ApiError(message="User NOT logged out", status_code=400)
 
 
-def email_verification(**kwargs):
+def email_verification(**kwargs: dict):
     """
         Attempts to verify an email via the email token
 
@@ -204,7 +203,7 @@ def update(user_id, **kwargs):
     permission(kwargs['token_info'], access_role='admin')
 
 
-def generate_new_tokens(**kwargs):
+def generate_new_tokens(**kwargs: dict) -> dict:
     """
         Generates new API usage and refresh tokens
         Generally when a client's access token has expired they can request a
@@ -223,12 +222,12 @@ def generate_new_tokens(**kwargs):
         raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
 
 
-def suspend(token_info, resident_id, **kwargs):
+def suspend(token_info, user_id, **kwargs):
     """
         Suspend aka diable a user
 
     :param token_info: contains token payload
-    :param resident_id:
+    :param user_id:
     :return: SuccessResponse
     :errors:
         'user-not-found' 404
