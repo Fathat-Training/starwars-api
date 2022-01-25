@@ -22,7 +22,7 @@ from config.v1.app_config import MYSQL
 #     Database Connection
 # ------------------------------------------------
 
-def db_connect():
+def db_connect() -> tuple:
     """
         Connects to our database
 
@@ -43,7 +43,7 @@ def db_connect():
         raise DataAccessError(message="Database Connection Error", status_code=503)
 
 
-def db_insert_update(sql, values=None):
+def db_insert_update(sql: str, values=None):
     """
         Calls sql on the database and
         returns the result.
@@ -73,7 +73,7 @@ def db_insert_update(sql, values=None):
         raise DataAccessError(message=e.args[1], status_code=503)
 
 
-def db_query(sql, values):
+def db_query(sql: str, values: str):
     """
         Calls sql on the database and
         returns the result.
@@ -93,7 +93,7 @@ def db_query(sql, values):
         raise DataAccessError(message=e.args[1], status_code=503)
 
 
-def db_json_result(data, headers):
+def db_json_result(data, headers) -> list[dict]:
     json_data = []
     for result in data:
         try:
@@ -102,14 +102,16 @@ def db_json_result(data, headers):
             json_data.append(dict(zip(headers, str(result))))
     return json_data
 
-def db_delete(sql, values):
+
+def db_delete(sql: str, values):
     """
         Calls sql on the database for deleting rows
     :param sql: The SQL DELETE statement
-    :param values: The values to be substituted in
+    :param values: The values to be matched with rows to be deleted
     :return: The number of rows deleted
     """
     assert "DELETE" in sql, "db_delete should be called only with DELETE statements"
+
     try:
         db = db_connect()
         with db.cursor() as cur:

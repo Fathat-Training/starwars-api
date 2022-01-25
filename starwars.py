@@ -24,6 +24,7 @@ from errors.v1.handlers import DataAccessError
 # URL = 'https://swapi.dev/api/'
 URL = 'https://swapi.py4e.com/api/'
 
+
 # ------------------------------------------------
 #          CLASSES START HERE
 # ------------------------------------------------

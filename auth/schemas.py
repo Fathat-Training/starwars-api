@@ -1,5 +1,5 @@
 
-def access_roles():
+def access_roles() -> dict:
     """
         Access Roles - The integer defines order and accessibility in a minimum roles scheme
     """

@@ -4,7 +4,7 @@ from config.v1.app_config import JWT_SECRET
 from errors.v1.handlers import ApiError
 
 
-def decode_token(token):
+def decode_token(token: str) -> dict:
     """
         Standard Token decode function only.
         If we have a token and the token is not in cache - grab the payload

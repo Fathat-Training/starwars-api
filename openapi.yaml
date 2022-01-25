@@ -212,8 +212,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/FilmListResponse'
 
-#      security:
-#        - jwt: []
+      security:
+        - jwt: []
 
 # -----------------------------------------------
 # AUTHENTICATION AND USER PATHS
@@ -1055,8 +1055,8 @@ components:
         - $ref: '#/components/schemas/FilmCharacters'
         - $ref: '#/components/schemas/FilmPlanets'
         - $ref: '#/components/schemas/FilmSpecies'
-        - $ref: '#/components/schemas/CharacterStarships'
-        - $ref: '#/components/schemas/CharacterVehicles'
+        - $ref: '#/components/schemas/FilmStarships'
+        - $ref: '#/components/schemas/FilmVehicles'
 
     FilmListResponse:
       properties:
