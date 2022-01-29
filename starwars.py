@@ -14,7 +14,7 @@ import requests
 # ------------------------------------------------
 
 # ------------------------------------------------
-#     local Imports
+#     Module Imports
 # ------------------------------------------------
 from errors.v1.handlers import DataAccessError
 
@@ -61,7 +61,7 @@ class StarWars(object):
             raise DataAccessError(message=error, status_code=resp.status)
 
     async def api_query(self, urls, **kwargs):
-        """r
+        """
             Set up an async task for each url in urls and call the urls asynchronously.
             Asyncio sets up a client connection to handle all the calls to the swapi api.
             Calls fetch_json after each task/url call gets a response
@@ -79,7 +79,8 @@ class StarWars(object):
 
             # waits for asyncio.gather() to be completed, required because we want to sort when all data has arrived
             await asyncio.gather(*tasks, return_exceptions=True)
-            # await session.close() # This has no effect - need to look into this
+            # This has no effect - because we are using a with statement that will automatically close the session
+            # await session.close()
 
     def request_data_async(self, query, batch_size=None, max_items=None):
         """
