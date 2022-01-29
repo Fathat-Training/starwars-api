@@ -16,7 +16,7 @@ from errors.v1.handlers import ApiError, DataAccessError
 from auth.core import permission
 
 # ------------------------------------------------
-#    User Data Access layer
+#    Films Data Access layer
 # ------------------------------------------------
 from films.v1.data_access import *
 

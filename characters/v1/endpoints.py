@@ -23,7 +23,7 @@
 from characters.v1.data_access import *
 
 # ------------------------------------------------
-#     local Imports
+#     Module Imports
 # ------------------------------------------------
 from basehandler import api_response
 from errors.v1.handlers import ApiError, DataAccessError

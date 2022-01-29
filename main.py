@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 
 # -------------------------------------------------
-#  Local Imports
+#  Module Imports
 # -------------------------------------------------
 from errors.v1 import handlers as error_handlers
 

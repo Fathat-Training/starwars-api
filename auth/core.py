@@ -19,7 +19,7 @@ import jwt
 from auth.schemas import access_roles
 
 # ----------------------------
-#  Local Imports
+#  Module Imports
 # ----------------------------
 from errors.v1.handlers import ApiError
 from config.v1.app_config import JWT_SECRET, JWT_EMAIL_SECRET, JWT_REFRESH_SECRET, JWT_PASSWORD_SECRET, JWT_BASIC_PAYLOAD_CLAIM, \

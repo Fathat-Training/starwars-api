@@ -1,7 +1,7 @@
 
 
 # ------------------------------
-#  Local Imports
+#  Module Imports
 # ------------------------------
 import sys
 

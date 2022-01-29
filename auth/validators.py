@@ -17,7 +17,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHash as Argon2InvalidHash, VerificationError as Argon2VerificationError
 
 # ------------------------------
-#  Local Imports
+#  Module Imports
 # ------------------------------
 
 
