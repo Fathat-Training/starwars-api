@@ -26,7 +26,7 @@ from characters.v1.data_access import *
 #     Module Imports
 # ------------------------------------------------
 from basehandler import api_response
-from errors.v1.handlers import ApiError, DataAccessError
+from errors.v1.handlers import ApiError
 
 
 # ------------------------------------------------
@@ -41,14 +41,12 @@ def get_character(character_id, **kwargs: dict) -> dict:
     :param kwargs: options - object of option key-value pairs for returning extra data based on a boolean value for each key. See Api Specification for Character options
     :return: Character Entity
     :errors:
-        DataAccessError - raises an APIError
+        APIError
     """
 
-    try:
-        character = CharacterDacc.character(character_id, kwargs['options'])
-        return api_response(character)
-    except DataAccessError as e:
-        raise ApiError(e.message, e.status_code, e.payload)
+    # try:
+    character = CharacterDacc.character(character_id, kwargs['options'])
+    return api_response(character)
 
 
 # ------------------------------------------------
@@ -67,6 +65,7 @@ def get_characters(**kwargs: dict) -> dict:
          batch_size - The maximum number of items for each api call to be returned
     :return: List of Character Entities
     :errors:
+        ApiError
     """
     characters, count = CharacterDacc.characters(kwargs)
 

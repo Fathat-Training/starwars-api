@@ -36,7 +36,7 @@ def signup(**kwargs: dict):
     :param kwargs:
     :return: user entity
     :errors:
-        DataAccessError
+        ApiError
         "invalid" 400
         "invalid" 400
     """
@@ -44,23 +44,19 @@ def signup(**kwargs: dict):
 
     pwd = prep_password(data['password'])
 
-    try:
-        # Check there is an existing user with the same email
-        if UserDacc.user_exists_by_email(data['email']):
-            raise ApiError(message="user-already-exists", status_code=400)
+    # Check there is an existing user with the same email
+    if UserDacc.user_exists_by_email(data['email']):
+        raise ApiError(message="user-already-exists", status_code=400)
 
-        # Swap the password in data for the hashed one
-        data['password'] = pwd
-        UserDacc.create(data)
+    # Swap the password in data for the hashed one
+    data['password'] = pwd
+    UserDacc.create(data)
 
-        # Retrieve the newly created user and send verification email.
-        user = UserDacc.get_by_email(data['email'])
-        UserDacc.send_verification_email(user)
+    # Retrieve the newly created user and send verification email.
+    user = UserDacc.get_by_email(data['email'])
+    UserDacc.send_verification_email(user)
 
-        return api_response()
-
-    except DataAccessError as e:
-        raise ApiError(e.message, e.status_code, e.payload)
+    return api_response()
 
 
 def login(**kwargs: dict) -> dict:
@@ -74,22 +70,20 @@ def login(**kwargs: dict) -> dict:
     :return: Token, Refresh token and user entity
     :errors:
 
-        DataAccessError
+        ApiError
             error_msg from password validation 401
             "user-unknown" 400
 
         "user-forbidden" 400
         "email-unverified", 400
     """
+
     auth = kwargs['body']
     email = auth['email'].lower()
     password = auth['password']
 
-    try:
-        user, token, refresh_token = UserDacc.login(email, password)
-        return api_response({'token': token, 'refresh_token': refresh_token, 'user': user})
-    except DataAccessError as e:
-        raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
+    user, token, refresh_token = UserDacc.login(email, password)
+    return api_response({'token': token, 'refresh_token': refresh_token, 'user': user})
 
 
 def logout(**kwargs: dict):
@@ -104,6 +98,7 @@ def logout(**kwargs: dict):
     :param kwargs:
     :return:
     """
+
     if 'Authorization' in request.headers:
 
         # Extract auth data from the authentication header
@@ -115,6 +110,7 @@ def logout(**kwargs: dict):
             kwargs['token_info']['token'] = token
 
             permission(kwargs['token_info'], access_role='basic', logout=True)
+            UserDacc.logout(kwargs['token_info']['user_id'])
             return api_response()
         else:
             raise ApiError(message="Authorisation required", status_code=400)
@@ -215,11 +211,8 @@ def generate_new_tokens(**kwargs: dict) -> dict:
     :errors:
         'unknown-user' 404
     """
-    try:
-        token, refresh_token = UserDacc.generate_new_tokens(kwargs['token_info']['user_id'], kwargs['token_info']['access_role'])
-        return api_response({'token': token, 'refresh_token': refresh_token, 'user': kwargs['token_info']['user_id']})
-    except DataAccessError as e:
-        raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
+    token, refresh_token = UserDacc.generate_new_tokens(kwargs['token_info']['user_id'], kwargs['token_info']['access_role'])
+    return api_response({'token': token, 'refresh_token': refresh_token, 'user': kwargs['token_info']['user_id']})
 
 
 def suspend(token_info, user_id, **kwargs):
@@ -253,13 +246,11 @@ def delete_account(token_info, user_id, **kwargs):
     if user_id == token_info['user_id']:
         raise ApiError(message="forbidden", status_code=403)
 
-    try:
-        if not UserDacc.user_exists_by_id(user_id):
-            raise ApiError(message="not-found", status_code=404)
-        UserDacc.delete_user(user_id)
-        return api_response({'id': user_id})
-    except DataAccessError as e:
-        raise ApiError(e.message, status_code=e.status_code, payload=e.payload)
+    if not UserDacc.user_exists_by_id(user_id):
+        raise ApiError(message="not-found", status_code=404)
+
+    UserDacc.delete_user(user_id)
+    return api_response({'id': user_id})
 
 
 def get_user(user_id, **kwargs):
@@ -270,7 +261,7 @@ def get_user(user_id, **kwargs):
     :param kwargs: contains token payload with Client request user_id
     :return: User Entity
     :errors:
-        DataAccessError
+        ApiError
     """
     permission(kwargs['token_info'], access_role='admin')
 
@@ -286,10 +277,8 @@ def list_users(**kwargs):
     """
     permission(kwargs['token_info'], access_role='admin')
 
-    try:
-        # Swap the password in data for the hashed one
-        users = UserDacc.list_users(kwargs)
-        return api_response({'users': users})
-    except DataAccessError as e:
-        raise ApiError(e.message, e.status_code, e.payload)
+    # Swap the password in data for the hashed one
+    users = UserDacc.list_users(kwargs)
+    return api_response({'users': users})
+
 
