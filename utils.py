@@ -42,11 +42,14 @@ def options_filter(data, options):
     if isinstance(data, list):
 
         for item in data:
-            fd = filter_options(item, options)
-            fl.append(fd)
-    else:
+            if isinstance(item, dict):
+                fd = filter_options(item, options)
+                fl.append(fd)
+    elif isinstance(data, dict):
         fd = filter_options(data, options)
         fl.append(fd)
+    else:
+        return data
 
     return fl
 
@@ -145,7 +148,7 @@ def send_email(receiver_email, subject, message_body):
 #                 writer.writerow({'name': i['name'], 'species': i['species'], 'height': i['height'], 'appearances': len(i['films'])})
 #         except Exception as e:
 #             # Raise a generic error here - ideally need to be mor specific...
-#             raise DataAccessError(message="Problem setting writing to csv file -->" + str(e), status_code=500)
+#             raise ApiError(message="Problem setting writing to csv file -->" + str(e), status_code=500)
 #
 #     print("Written CSV file")
 #
@@ -168,11 +171,11 @@ def send_email(receiver_email, subject, message_body):
 #                 print("File sent")
 #             else:
 #                 message = response.text
-#                 raise DataAccessError(message=message, status_code=response.status_code)
+#                 raise ApiError(message=message, status_code=response.status_code)
 #         except Exception as e:
 #             error = str(e)
 #             message = f"Sending file {file} to url {url}/post failed with an error {error}"
-#             raise DataAccessError(message=message)
+#             raise ApiError(message=message)
 #     else:
 #         message = f"url {url} and file {file} should be of type str"
-#         raise DataAccessError(message=message)
+#         raise ApiError(message=message)

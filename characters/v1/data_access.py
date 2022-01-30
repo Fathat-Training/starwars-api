@@ -11,7 +11,6 @@
 # ------------------------------------------------
 #     Project Imports
 # ------------------------------------------------
-from errors.v1.handlers import DataAccessError
 from starwars import StarWars
 from utils import options_filter, dict_sort
 

@@ -217,7 +217,6 @@ def is_revoked(token: str) -> bool:
     """
     if redis_connection.get(token):
         return True
-
     return False
 
 

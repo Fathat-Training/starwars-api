@@ -14,7 +14,7 @@ import json
 # ------------------------------------------------
 #    Module Imports
 # ------------------------------------------------
-from errors.v1.handlers import DataAccessError
+from errors.v1.handlers import ApiError
 from config.v1.app_config import MYSQL
 
 
@@ -40,7 +40,7 @@ def db_connect() -> tuple:
 
     except Exception as e:
         # We could use an HTTP error status code of 500 or 503
-        raise DataAccessError(message="Database Connection Error", status_code=503)
+        raise ApiError(message="Database Connection Error", status_code=503)
 
 
 def db_insert_update(sql: str, values=None):
@@ -66,11 +66,17 @@ def db_insert_update(sql: str, values=None):
             db.close()
             return rid
 
-        return
     except IntegrityError as e:
         # Integrity Error normally evoked when a duplicate entry is attempted - i.e. same email address, password, etc.
         # Check Unique columns for the database
-        raise DataAccessError(message=e.args[1], status_code=503)
+        raise ApiError(message=e.args[1], status_code=503)
+    except Exception as e:
+        if e.message == "Database Connection Error":
+            message = "service unavailable"
+        else:
+            message = e.message
+
+        raise ApiError(message=message, status_code=503)
 
 
 def db_query(sql: str, values: str):
@@ -90,7 +96,11 @@ def db_query(sql: str, values: str):
             headers = [x[0] for x in cur.description]
             return db_json_result(cur.fetchall(), headers)
     except Exception as e:
-        raise DataAccessError(message=e.args[1], status_code=503)
+        if e.message == "Database Connection Error":
+            message = "service unavailable"
+        else:
+            message = e.message
+        raise ApiError(message=message, status_code=503)
 
 
 def db_json_result(data, headers) -> list[dict]:
@@ -121,4 +131,9 @@ def db_delete(sql: str, values):
         db.close()
         return deleted_row_count
     except Exception as e:
-        raise DataAccessError(message=e.args[1], status_code=503)
+        if e.message == "Database Connection Error":
+            message = "service unavailable"
+        else:
+            message = e.message
+
+        raise ApiError(message=message, status_code=503)

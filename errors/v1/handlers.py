@@ -57,16 +57,16 @@ class ApiError(Exception):
         return rv
 
 
-class DataAccessError(Exception):
-    """
-       Indicates that there is some form of data access error in our data access layers
-    :param: Exception
-    """
-    def __init__(self, **kwargs):
-        self.message = kwargs['message']
-        self.status_code = kwargs['status_code']
-        self.payload = kwargs.get('payload') or None
-        super(DataAccessError, self).__init__(self.message, self.status_code)
+# class DataAccessError(Exception):
+#     """
+#        Indicates that there is some form of data access error in our data access layers
+#     :param: Exception
+#     """
+#     def __init__(self, **kwargs):
+#         self.message = kwargs['message']
+#         self.status_code = kwargs['status_code']
+#         self.payload = kwargs.get('payload') or None
+#         super(DataAccessError, self).__init__(self.message, self.status_code)
 
 
 @error_handlers.app_errorhandler(ApiError)

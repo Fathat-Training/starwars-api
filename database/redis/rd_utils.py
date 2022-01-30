@@ -12,7 +12,7 @@ import logging
 # ------------------------------------------------
 #    Module Imports
 # ------------------------------------------------
-from errors.v1.handlers import DataAccessError
+from errors.v1.handlers import ApiError
 from config.v1.app_config import REDIS
 
 
@@ -34,7 +34,8 @@ class RedisConnect(object):
 
         except redis.AuthenticationError:
             # We could use an HTTP error status code of 500 or 503
-            raise DataAccessError(message="Redis Authentication Error", status_code=503)
+            logging.error("Redis Authentication Error %s" % self.connect_data['db'], exc_info=True)
+            raise ApiError(message="service unavailable", status_code=503)
 
     def check_connection(self):
         try:
@@ -64,17 +65,18 @@ class RedisConnect(object):
             self.bgsave()
         except ResponseError as e:
             logging.error("Redis did not save the key %s" % k, exc_info=True)
+            raise ApiError(message="service unavailable", status_code=503)
 
     def get(self, k):
         """
-            Return a Key/Value pair to the Redis cache where the k is a name
+            Return a Key/Value pair from the Redis cache where the k is a name
         :
         :return:
         """
         try:
             return self.connection.get(k)
         except Exception:
-            raise DataAccessError(message="Redis was unable to retrieve the key %s" % k, status_code=503)
+            raise ApiError(message="service unavailable", status_code=503)
 
 
 # This is a pointer to the class RedisConnect above and can be imported by modules

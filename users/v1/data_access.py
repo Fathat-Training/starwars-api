@@ -12,7 +12,7 @@ from datetime import datetime
 # ------------------------------------------------
 #     Project Imports
 # ------------------------------------------------
-from errors.v1.handlers import DataAccessError
+from errors.v1.handlers import ApiError
 from auth.validators import check_password
 from auth.core import generate_jwt
 from database.mysql.db_utils import db_insert_update, db_query, db_delete
@@ -26,7 +26,7 @@ import urllib.parse
 #     local VARIABLES
 # ------------------------------------------------
 # Everything we don't want to pass in a response
-USER_EXCLUDES = ['password', 'access_role', 'refresh_token', 'disabled']
+USER_EXCLUDES = ['password', 'access_role', 'refresh_token', 'disabled', 'logged_in']
 
 
 # ------------------------------------------------
@@ -47,13 +47,11 @@ class UserDacc(object):
         :return:
         """
 
-        try:
-            sql = "INSERT INTO users (email, password, access_role, created, disabled, email_verified) " \
-                  "VALUES (%s, %s, %s, %s, %s, %s)"
-            values = (data['email'], data['password'], data['access_role'], datetime.now(), 1, 0)
-            db_insert_update(sql, values)
-            return
-        except DataAccessError as e: raise
+        sql = "INSERT INTO users (email, password, access_role, created, disabled, email_verified) " \
+              "VALUES (%s, %s, %s, %s, %s, %s)"
+        values = (data['email'], data['password'], data['access_role'], datetime.now(), 1, 0)
+        db_insert_update(sql, values)
+
 
     @staticmethod
     def login(email: str, password: str):
@@ -66,29 +64,41 @@ class UserDacc(object):
         try:
             user = UserDacc.get_by_credentials(email, password)
         except Exception as e:
-            raise DataAccessError(message="not-found", status_code=404)
+            raise ApiError(message="not-found", status_code=404)
+
+        if user['logged_in']:
+            raise ApiError(message="user-already-logged-in", status_code=400)
 
         if not user['disabled']:
 
             if user['email_verified']:
+
                 # Generate new access and refresh tokens
                 token, refresh_token = UserDacc.generate_new_tokens(user['id'], user['access_role'])
-
-                if user['refresh_token']:
-                    # Add the old refresh token to some kind of cache (In this case Redis) so
-                    # that we can fail the token in authorisation if it has not yet expired.
-                    redis_connection.set(user['refresh_token'])
-
-                # Save the new refresh token to the user's database row.
-                sql = "UPDATE users SET refresh_token = %s WHERE id = %s"
-                db_insert_update(sql, (refresh_token, user['id']))
                 user = dict_excludes(user, USER_EXCLUDES)
+
+                # Update the record to state user logged in
+                sql = "UPDATE users SET logged_in = %s WHERE id = %s"
+                db_insert_update(sql, (1, user['id']))
                 return user, token, refresh_token
             else:
-                raise DataAccessError(message="email-unverified", status_code=400)
+                raise ApiError(message="email-unverified", status_code=400)
 
         else:
-            raise DataAccessError(message="User Account Disabled", status_code=400)
+            raise ApiError(message="User Account Disabled", status_code=400)
+
+    @staticmethod
+    def logout(user_id: str):
+        """
+
+        :param user_id:
+        :return:
+        """
+        import pdb;pdb.set_trace()
+        # Save the new refresh token to the user's database row.
+        sql = "UPDATE users SET logged_in = %s WHERE id = %s"
+        db_insert_update(sql, (0, user_id))
+
     #
     # @staticmethod
     # def update(user_id, data):
@@ -134,7 +144,7 @@ class UserDacc(object):
         if check_password(password, user['password']):
             return user
         else:
-            raise DataAccessError(message='forbidden', status_code=403)
+            raise ApiError(message='forbidden', status_code=403)
 
     @staticmethod
     def get_by_email(email: str) -> dict:
@@ -154,7 +164,7 @@ class UserDacc(object):
         if user:
             return user
 
-        raise DataAccessError(message='user-not-found', status_code=404)
+        raise ApiError(message='user-not-found', status_code=404)
 
     @staticmethod
     def user_exists_by_email(email: str) -> bool:
@@ -197,7 +207,7 @@ class UserDacc(object):
         if user:
             return user
 
-        raise DataAccessError(message='user-not-found', status_code=404)
+        raise ApiError(message='user-not-found', status_code=404)
 
     @staticmethod
     def send_verification_email(user: dict):
@@ -218,7 +228,7 @@ class UserDacc(object):
         try:
             send_email(user['email'], "Please verify account", message_body)
         except Exception as e:
-            raise DataAccessError(message="server-error", status_code=500)
+            raise ApiError(message="server-error", status_code=500)
 
     @staticmethod
     def verify_email(user_id, user_email: str):
@@ -235,10 +245,12 @@ class UserDacc(object):
 
         # Check if the token contains the current email of the user.
         if user["email"] != user_email:
-            raise DataAccessError(message="token-invalid", status_code=401)
+            raise ApiError(message="token-invalid", status_code=401)
 
         sql = "UPDATE users SET email_verified = 1, disabled = 0 WHERE id = %s"
+
         db_insert_update(sql, (user_id,))
+
 
     @staticmethod
     def get_token(**kwargs: dict) -> str:
@@ -276,11 +288,23 @@ class UserDacc(object):
             user = UserDacc.get_by_id(uid)
 
             if user['access_role'] == access_role:
+
+                if user['refresh_token']:
+
+                    # Add the old refresh token to some kind of cache (In this case Redis) so
+                    # that we can fail the token in authorisation if it has not yet expired.
+                    redis_connection.set(user['refresh_token'])
+
                 token = UserDacc.get_token(user_id=uid, access_role=access_role, payload_claim={'standard_claim': True})
                 refresh_token = UserDacc.get_refresh_token(uid, access_role)
 
-                return token, refresh_token
+                # Save the new refresh token to the user's database row.
+                sql = "UPDATE users SET refresh_token = %s WHERE id = %s"
+                db_insert_update(sql, (refresh_token, user['id']))
 
+                return token, refresh_token
+            else:
+                raise ApiError(message='not-found', status_code=404)
         except Exception as e:
             raise e
 
@@ -308,7 +332,7 @@ class UserDacc(object):
         num_deleted = db_delete(sql, values)
         print(f"deleted row count={num_deleted}")
         if num_deleted == 0:
-            raise DataAccessError(message="not-found", status=404)
+            raise ApiError(message="not-found", status=404)
 
     # @staticmethod
     # def revoke_refresh_token(user_id):

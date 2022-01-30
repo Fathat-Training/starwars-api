@@ -16,7 +16,7 @@ import requests
 # ------------------------------------------------
 #     Module Imports
 # ------------------------------------------------
-from errors.v1.handlers import DataAccessError
+from errors.v1.handlers import ApiError
 
 # ------------------------------------------------
 #    Script Wide Variables
@@ -57,8 +57,8 @@ class StarWars(object):
             # Put the results data on the end of the list
             self.swars_data.extend(data['results'])
         else:
-            error = f"url {url}"
-            raise DataAccessError(message=error, status_code=resp.status)
+            error = f"problem with url {url}"
+            raise ApiError(message=error, status_code=resp.status)
 
     async def api_query(self, urls, **kwargs):
         """
@@ -128,10 +128,10 @@ class StarWars(object):
 
         except requests.ConnectionError as e:
             msg = "OOPS!! Connection Error. Make sure you are connected to a live Internet connection."
-            raise DataAccessError(message=msg, status_code=status)
+            raise ApiError(message=msg, status_code=status)
         except requests.Timeout as e:
             msg = "OOPS!! Timeout Error"
-            raise DataAccessError(message=msg, status_code=status)
+            raise ApiError(message=msg, status_code=status)
         except requests.HTTPError as e:
             if status == 404:
                 msg = "Not Found"
@@ -141,8 +141,8 @@ class StarWars(object):
                 msg = "Server Error on the Star Wars Api"
             else:
                 msg = "Opps Something went wrong!!"
-            raise DataAccessError(message=msg, status_code=status)
+            raise ApiError(message=msg, status_code=status)
         except KeyboardInterrupt:
             msg = "Someone closed the program"
-            raise DataAccessError(message=msg, status_code=status)
+            raise ApiError(message=msg, status_code=status)
 

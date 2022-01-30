@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="">
+    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="Where to start, changed">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/utlis.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/utlis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/validators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/basehandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/basehandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/characters/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/characters/v1/data_access.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/characters/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/characters/v1/endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/v1/app_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/v1/app_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors/v1/error_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/errors/v1/error_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/mysql/db_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/mysql/db_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/redis/rd_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/redis/rd_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/errors/v1/handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/errors/v1/handlers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/films/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/films/v1/data_access.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/films/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/films/v1/endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starwars.py" beforeDir="false" afterPath="$PROJECT_DIR$/starwars.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/data_access.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +33,9 @@
         <entry key="FLASK_APP" value="app" />
       </map>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="master" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -178,16 +183,7 @@
       <workItem from="1642920773705" duration="7000" />
       <workItem from="1643023594748" duration="6340000" />
       <workItem from="1643093075594" duration="4182000" />
-      <workItem from="1643278927030" duration="1868000" />
-      <workItem from="1643283196741" duration="2191000" />
-      <workItem from="1643286092230" duration="240000" />
-      <workItem from="1643286352427" duration="1213000" />
-      <workItem from="1643288506008" duration="94000" />
-      <workItem from="1643288617360" duration="105000" />
-      <workItem from="1643288739304" duration="5943000" />
-      <workItem from="1643345921194" duration="5178000" />
-      <workItem from="1643374548823" duration="641000" />
-      <workItem from="1643453933206" duration="4304000" />
+      <workItem from="1643529712926" duration="21983000" />
     </task>
     <task id="LOCAL-00001" summary="Chez's Working Branch">
       <created>1641553763873</created>
@@ -329,6 +325,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1641732299162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1643460347387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1643559601338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

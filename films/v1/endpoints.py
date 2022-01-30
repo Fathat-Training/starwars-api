@@ -12,7 +12,7 @@
 #    Module Imports
 # ------------------------------------------------
 from basehandler import api_response
-from errors.v1.handlers import ApiError, DataAccessError
+from errors.v1.handlers import ApiError
 from auth.core import permission
 
 # ------------------------------------------------
@@ -31,13 +31,10 @@ def get_film(film_id, **kwargs):
     :param film_id: The id of the film to be retrieved
     :return: Film Entity
     :errors:
-        DataAccessError - raises an APIError
+        APIError
     """
-    try:
-        film = FilmDacc.film(film_id, kwargs['options'])
-        return api_response(film)
-    except DataAccessError as e:
-        raise ApiError(e.message, e.status_code, e.payload)
+    film = FilmDacc.film(film_id, kwargs['options'])
+    return api_response(film)
 
 
 # ------------------------------------------------
