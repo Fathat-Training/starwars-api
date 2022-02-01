@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 # ------------------------------------------------
 #    External imports
 # ------------------------------------------------
@@ -21,7 +20,6 @@ from errors.v1.handlers import ApiError
 # ------------------------------------------------
 #    Script Wide Variables
 # ------------------------------------------------
-# URL = 'https://swapi.dev/api/'
 URL = 'https://swapi.py4e.com/api/'
 
 
