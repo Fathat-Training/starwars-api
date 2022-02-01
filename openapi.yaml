@@ -201,12 +201,10 @@ paths:
           style: deepObject
           schema:
             $ref: '#/components/schemas/FilmExtras'
-        - $ref: '#/components/parameters/MaxItems'
-        - $ref: '#/components/parameters/BatchSize'
 
       responses:
         '200':
-          description: Returns a data object containing a list of Film entities and next_page object with the next_page to get or None
+          description: Returns a data object containing a list of Film entities
           content:
             application/json:
               schema:

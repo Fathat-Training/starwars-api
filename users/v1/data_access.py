@@ -94,7 +94,6 @@ class UserDacc(object):
         :param user_id:
         :return:
         """
-        import pdb;pdb.set_trace()
         # Save the new refresh token to the user's database row.
         sql = "UPDATE users SET logged_in = %s WHERE id = %s"
         db_insert_update(sql, (0, user_id))

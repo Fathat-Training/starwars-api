@@ -37,10 +37,6 @@ def get_film(film_id, **kwargs):
     return api_response(film)
 
 
-# ------------------------------------------------
-#          ENDPOINT FUNCTIONS START HERE
-# ------------------------------------------------
-
 def get_films(**kwargs):
     """
         Fetch all the films via pagination. If there is a cursor then fetch the next batch of films
@@ -50,7 +46,7 @@ def get_films(**kwargs):
     :errors:
     """
     permission(kwargs['token_info'], access_role='basic')
-    films, count = FilmDacc.films(kwargs['options'], kwargs['max_items'], kwargs['batch_size'])
+    films, count = FilmDacc.films(kwargs['options'])
 
     if films:
         return api_response({
