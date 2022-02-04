@@ -36,9 +36,6 @@ if module_path not in sys.path:
     sys.path.append(module_path)
 
 
-DEFAULT_PAYLOAD = ['iat', 'sub', 'exp']
-
-
 # ----------------------------
 #  Functions
 # ----------------------------
@@ -51,8 +48,9 @@ def generate_jwt(**kwargs: dict) -> str:
     :return: token
     :errors:
         'invalid-payload_CLAIM_argument' 401
-        'problem-encoding-jwt' 401
-        'missing-users-id-for-token-generation' 401
+        'problem-creating-token' 401
+        'user-not-found' 401
+        'token-generation-failure' 401
     """
 
     def gen_token(**kwargs: dict) -> str:
@@ -87,8 +85,9 @@ def generate_jwt(**kwargs: dict) -> str:
                 payload.update(kwargs['payload_claim'])
 
             else:
-                raise ApiError('invalid-token', status_code=401)
+                raise ApiError('invalid-payload_claim', status_code=401)
 
+            # Add some registered claims and our own private claims for user_id and access_role.
             payload.update({
                 'iss': JWT_ISSUER,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=hours),
@@ -108,12 +107,12 @@ def generate_jwt(**kwargs: dict) -> str:
 
                 return token
             else:
-                raise ApiError('invalid-token', status_code=401)
+                raise ApiError('problem-creating-token', status_code=401)
 
         except Exception as e:
             raise ApiError('token-generation-failure', status_code=401)
 
-    if kwargs['user_id']:
+    if kwargs['user_id'] and kwargs['access_role']:
 
         token = gen_token(**kwargs)
         return token
@@ -132,7 +131,7 @@ def decode_auth_token(token: str, secret: str) -> dict:
         'token-invalid' 401
     """
     try:
-        return jwt.decode(token, secret, algorithms=['HS256'])
+        return jwt.decode(token, secret, algorithms=[JWT_ALGORITHM])
     except jwt.ExpiredSignatureError:
         raise ApiError('token-expired', status_code=401)
     except jwt.InvalidTokenError:
@@ -154,11 +153,11 @@ def has_expired(token: str, secret: str):
         return True
 
 
-def decode_usage_token(token: str):
+def decode_access_token(token: str):
     """
-        Decodes an email token
+        Decodes an access token
     :param token:
-    :return: returns the payload of the decoded JWT
+    :return: returns the payload of the decoded access JWT
     :errors: See decode_auth_token
     """
     return decode_auth_token(token, JWT_SECRET)
@@ -169,7 +168,7 @@ def decode_email_token(token: str):
         Decodes an email token
 
     :param token:
-    :return: returns the payload of the decoded JWT
+    :return: returns the payload of the decoded email JWT
     :errors: See decode_auth_token
 
     """
@@ -181,7 +180,7 @@ def decode_password_token(token: str):
         Decodes a password token
 
     :param token:
-    :return: returns the payload of the decoded JWT
+    :return: returns the payload of the decoded password JWT
     :errors: See decode_auth_token
 
     """
@@ -250,10 +249,9 @@ def verify_payload(payload: dict, access_role: str) -> bool:
             raise ApiError('token-invalid', status_code=401)
 
         # Check that the payload from the token has the minimum_role required
-        if access_role:
-            roles = access_roles()
-            if roles[payload['access_role']] < roles[access_role]:
-                raise ApiError('authorisation-required', status_code=401)
+        roles = access_roles()
+        if roles[payload['access_role']] < roles[access_role]:
+            raise ApiError('authorisation-required', status_code=401)
 
         return True
     else:
@@ -267,9 +265,8 @@ def verify_email_token(token: str):
     :returns: Token payload dictionary
     """
     if not is_revoked(token):
-        payload = decode_email_token(token)
-        access_role = payload["access_role"]
-        verify_payload(payload, access_role)
+        payload = decode_auth_token(token, JWT_EMAIL_SECRET)
+        verify_payload(payload, payload["access_role"])
 
         return payload
 
