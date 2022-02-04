@@ -54,7 +54,7 @@ class CharacterDacc(object):
         :return:
         """
         # From research we know that there are roughly 82 characters in the api database ( might change with the next movie release). We want to return
-        # all of the people. Now given that there are currently only 82 it would be a simple process to make one call to the api and receive all of the
+        # all of the people. Now given that there are currently only 83 it would be a simple process to make one call to the api and receive all of the
         # characters in one hit. However, what if we are dealing with thousands or even millions of character records. Returning them all at once would
         # our Request would take quite a long time, so what we shall do is to ...
         # To speed things up we generate all the api calls upfront as asynchronous calls.

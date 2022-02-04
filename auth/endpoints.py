@@ -14,7 +14,6 @@
 from auth.core import *
 from config.v1.app_config import JWT_SECRET
 from errors.v1.handlers import ApiError
-from users.v1.data_access import UserDacc
 
 
 def decode_token(token: str) -> dict:

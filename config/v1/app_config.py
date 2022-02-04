@@ -7,9 +7,6 @@
 # DATABASE
 # ---------------------------------------------------
 
-# AUTHENTICATION -
-
-
 MYSQL = {
     'host': "localhost",
     'user': "root",
@@ -32,6 +29,8 @@ SMTP = {
     "sender_password": "Soxpoq-joxku9-kajgot"
 }
 
+
+# AUTHENTICATION -
 
 # ---------------------------------------------------
 # JWT Json Web Tokens
@@ -70,25 +69,14 @@ JWT_REFRESH_PAYLOAD_CLAIM = ['user_id', 'refresh_claim']
 
 # --------------------------------------------------
 
-# Number of hours a standard basic and premium API usage token lasts
+# Number of hours a standard API usage token lasts
 JWT_ACCESS_HOURS = 10
-# Number of hours a standard API refresh token lasts
-JWT_REFRESH_HOURS = 11  # 1 years worth of hours
-# Number of hours a standard API password token lasts
+# Number of hours an API refresh token lasts
+JWT_REFRESH_HOURS = 24
+# Number of hours an API password token lasts
 JWT_PASSWORD_HOURS = 1
-# Number of hours a standard API email token lasts
+# Number of hours an API email token lasts
 JWT_EMAIL_HOURS = 1
-
-# ---------------------------------------------------
-# SECURITY HASHES
-# ---------------------------------------------------
-
-# HASHES AND SALTS
-SALT = "0f8014e60a33413b8f1ef6c414a5ed86"
-
-# aes_key must be only 16 (*AES-128*), 24 (*AES-192*), or 32 (*AES-256*) bytes (characters) long.
-# used for password hashing
-AES_KEY = "Wj73aG6QfrK6Hgjlh38C3Q8u4L5d3WOw"
 
 # ---------------------------------------------------
 # GENERAL SECTION
