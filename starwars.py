@@ -128,19 +128,19 @@ class StarWars(object):
             msg = "OOPS!! Connection Error. Make sure you are connected to a live Internet connection."
             raise ApiError(message=msg, status_code=status)
         except requests.Timeout as e:
-            msg = "OOPS!! Timeout Error"
+            msg = "timeout-error"
             raise ApiError(message=msg, status_code=status)
         except requests.HTTPError as e:
             if status == 404:
-                msg = "Not Found"
+                msg = "not-found"
             elif status == 400:
-                msg = "Bad Request"
+                msg = "bad-request"
             elif status == 500:
-                msg = "Server Error on the Star Wars Api"
+                msg = "server-error-star-wars-api"
             else:
-                msg = "Opps Something went wrong!!"
+                msg = "something-went-wrong"
             raise ApiError(message=msg, status_code=status)
         except KeyboardInterrupt:
-            msg = "Someone closed the program"
+            msg = "program-closed"
             raise ApiError(message=msg, status_code=status)
 

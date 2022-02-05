@@ -30,7 +30,6 @@ def db_connect() -> tuple:
     """
 
     try:
-
         return connect(
             host=MYSQL["host"],
             user=MYSQL["user"],

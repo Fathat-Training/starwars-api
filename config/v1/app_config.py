@@ -10,7 +10,7 @@
 MYSQL = {
     'host': "localhost",
     'user': "root",
-    'password': "00ChezBond7",
+    'password': "00Apassword7",
     'database': "fathat101users"
 }
 
