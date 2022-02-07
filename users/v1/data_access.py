@@ -17,16 +17,11 @@ from auth.utils import check_password
 from auth.core import generate_jwt, decode_access_token, revoke_auth_token
 from database.mysql.db_utils import db_insert_update, db_query, db_delete
 from database.redis.rd_utils import redis_connection
-from utils import dict_excludes, send_email
+from utils import send_email
 
 from flask import request
 import urllib.parse
 
-# ------------------------------------------------
-#     local VARIABLES
-# ------------------------------------------------
-# Everything we don't want to pass in a response
-USER_EXCLUDES = ['password', 'access_role', 'refresh_token', 'disabled', 'logged_in']
 
 
 # ------------------------------------------------
@@ -50,9 +45,9 @@ class UserDacc(object):
         if UserDacc.user_exists_by_email(data['email']):
             raise ApiError(message="user-already-exists", status_code=400)
 
-        sql = "INSERT INTO users (email, password, access_role, created, disabled, email_verified) " \
-              "VALUES (%s, %s, %s, %s, %s, %s)"
-        values = (data['email'], data['password'], data['access_role'], datetime.now(), 1, 0)
+        sql = "INSERT INTO users (email, password, access_role, created, disabled, email_verified, logged_in) " \
+              "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        values = (data['email'], data['password'], data['access_role'], datetime.now(), 0, 0, 0)
         db_insert_update(sql, values)
 
         # Retrieve the newly created user and send verification email.
@@ -81,7 +76,6 @@ class UserDacc(object):
 
                 # Generate new access and refresh tokens
                 token, refresh_token = UserDacc.generate_new_tokens(user['id'])
-                user = dict_excludes(user, USER_EXCLUDES)
 
                 # Update the record to state user logged in
                 sql = "UPDATE users SET logged_in = %s WHERE id = %s"
@@ -252,7 +246,7 @@ class UserDacc(object):
         if user["email"] != user_email:
             raise ApiError(message="token-invalid", status_code=401)
 
-        sql = "UPDATE users SET email_verified = 1, disabled = 0 WHERE id = %s"
+        sql = "UPDATE users SET email_verified = 1 WHERE id = %s"
 
         db_insert_update(sql, (user_id,))
 
