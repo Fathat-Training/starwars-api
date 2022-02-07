@@ -17,7 +17,7 @@
 # ----------------------------
 from users.v1.data_access import *
 from auth.core import permission, verify_email_token, revoke_auth_token
-from auth.validators import *
+from auth.utils import *
 from basehandler import api_response
 from errors.v1.handlers import *
 
@@ -44,17 +44,9 @@ def signup(**kwargs: dict):
 
     pwd = prep_password(data['password'])
 
-    # Check there is an existing user with the same email
-    if UserDacc.user_exists_by_email(data['email']):
-        raise ApiError(message="user-already-exists", status_code=400)
-
     # Swap the password in data for the hashed one
     data['password'] = pwd
     UserDacc.create(data)
-
-    # Retrieve the newly created user and send verification email.
-    user = UserDacc.get_by_email(data['email'])
-    UserDacc.send_verification_email(user)
 
     return api_response()
 
@@ -206,12 +198,14 @@ def generate_new_tokens(**kwargs: dict) -> dict:
         new set of tokens be generated as long as they have the correct unexpired
         refresh token.
 
+    :param user_id: The ID of the user to generate new tokens for.
     :param kwargs:
     :return: tokens
     :errors:
         'unknown-user' 404
     """
-    token, refresh_token = UserDacc.generate_new_tokens(kwargs['token_info']['user_id'], kwargs['token_info']['access_role'])
+    permission(kwargs['token_info'], access_role='basic')
+    token, refresh_token = UserDacc.generate_new_tokens(kwargs['token_info']['user_id'], kwargs['old_access_token'])
     return api_response({'token': token, 'refresh_token': refresh_token, 'user': kwargs['token_info']['user_id']})
 
 

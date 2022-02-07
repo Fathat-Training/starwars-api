@@ -13,8 +13,8 @@ from datetime import datetime
 #     Project Imports
 # ------------------------------------------------
 from errors.v1.handlers import ApiError
-from auth.validators import check_password
-from auth.core import generate_jwt
+from auth.utils import check_password
+from auth.core import generate_jwt, decode_access_token, revoke_auth_token
 from database.mysql.db_utils import db_insert_update, db_query, db_delete
 from database.redis.rd_utils import redis_connection
 from utils import dict_excludes, send_email
@@ -46,12 +46,18 @@ class UserDacc(object):
         :param data:
         :return:
         """
+        # Check there is an existing user with the same email
+        if UserDacc.user_exists_by_email(data['email']):
+            raise ApiError(message="user-already-exists", status_code=400)
 
         sql = "INSERT INTO users (email, password, access_role, created, disabled, email_verified) " \
               "VALUES (%s, %s, %s, %s, %s, %s)"
         values = (data['email'], data['password'], data['access_role'], datetime.now(), 1, 0)
         db_insert_update(sql, values)
 
+        # Retrieve the newly created user and send verification email.
+        user = UserDacc.get_by_email(data['email'])
+        UserDacc.send_verification_email(user)
 
     @staticmethod
     def login(email: str, password: str):
@@ -74,7 +80,7 @@ class UserDacc(object):
             if user['email_verified']:
 
                 # Generate new access and refresh tokens
-                token, refresh_token = UserDacc.generate_new_tokens(user['id'], user['access_role'])
+                token, refresh_token = UserDacc.generate_new_tokens(user['id'])
                 user = dict_excludes(user, USER_EXCLUDES)
 
                 # Update the record to state user logged in
@@ -263,47 +269,41 @@ class UserDacc(object):
         return generate_jwt(**kwargs)
 
     @staticmethod
-    def get_refresh_token(uid, access_role: str) -> str:
-        """
-            Create a refresh token add it to the user's entity, replacing an existing
-
-        :param uid: User's ID
-        :param access_role: Users access role
-        :return: new refresh token
-        """
-        token = generate_jwt(user_id=uid, access_role=access_role,payload_claim={'refresh_claim': True})
-        return token
-
-    @staticmethod
-    def generate_new_tokens(uid, access_role: str):
+    def generate_new_tokens(uid: int, old_access_token=False) -> tuple:
         """
             Generate a new standard token and a new refresh token.
 
-        :param uid: User's ID passed from client
-        :param access_role: User's access_role passed from client
+        :param uid: User's ID to generate new tokens for passed from client
+        :param old_access_token: The old access token to be revoked.
         """
         try:
 
+            if old_access_token:
+                try:
+                    old_token_payload = decode_access_token(old_access_token)
+                    revoke_auth_token(old_access_token)
+                except ApiError as e:
+                    if e.message == 'token-invalid':
+                        raise e
+                if old_token_payload['user_id'] != uid:
+                    raise ApiError(message='token-invalid', status_code=403)
+
             user = UserDacc.get_by_id(uid)
 
-            if user['access_role'] == access_role:
+            if user['refresh_token']:
+                # Add the old refresh token to some kind of cache (In this case Redis) so
+                # that we can fail the token in authorisation if it has not yet expired.
+                redis_connection.set(user['refresh_token'])
 
-                if user['refresh_token']:
+            token = UserDacc.get_token(user_id=uid, access_role=user['access_role'], payload_claim={'standard_claim': True})
+            refresh_token = UserDacc.get_token(user_id=uid, access_role=user['access_role'], payload_claim={'refresh_claim': True})
 
-                    # Add the old refresh token to some kind of cache (In this case Redis) so
-                    # that we can fail the token in authorisation if it has not yet expired.
-                    redis_connection.set(user['refresh_token'])
+            # Save the new refresh token to the user's database row.
+            sql = "UPDATE users SET refresh_token = %s WHERE id = %s"
+            db_insert_update(sql, (refresh_token, user['id']))
 
-                token = UserDacc.get_token(user_id=uid, access_role=access_role, payload_claim={'standard_claim': True})
-                refresh_token = UserDacc.get_refresh_token(uid, access_role)
+            return token, refresh_token
 
-                # Save the new refresh token to the user's database row.
-                sql = "UPDATE users SET refresh_token = %s WHERE id = %s"
-                db_insert_update(sql, (refresh_token, user['id']))
-
-                return token, refresh_token
-            else:
-                raise ApiError(message='not-found', status_code=404)
         except Exception as e:
             raise e
 

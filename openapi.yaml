@@ -666,8 +666,7 @@ paths:
         Required Headers:
 
           Authorization request header
-
-            Bearer Valid Refresh Token
+            Bearer valid Admin access token
 
         Errors:
 
@@ -676,7 +675,13 @@ paths:
           'user-not-found', 404
 
       operationId: users.v1.endpoints.generate_new_tokens
-
+      parameters:
+        - name: old_access_token
+          description: The old access token of the user
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Returns a new access token (token) and a new refresh token (refresh_token)
@@ -686,7 +691,7 @@ paths:
                  $ref: '#/components/schemas/UserTokens'
 
       security:
-        - jwt: []
+        - jwt_refresh: []
 
 # -----------------------------------------------
 # COMPONENTS
@@ -699,6 +704,12 @@ components:
       scheme: bearer
       bearerFormat: JWT
       x-bearerInfoFunc: auth.endpoints.decode_token
+
+    jwt_refresh:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: auth.endpoints.decode_refresh_token
 
   # Common Parameters
   parameters:
@@ -719,7 +730,6 @@ components:
         type: integer
         minimum: 5
         default: 10
-
 
     BatchSize:
       in: query

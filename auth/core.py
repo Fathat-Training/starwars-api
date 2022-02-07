@@ -301,6 +301,7 @@ def permission(payload: dict, access_role: str, logout=False) -> bool:
     :param logout: If True then client is logging out
     :return: Boolean - True
     """
+
     verify_payload(payload, access_role)
 
     if logout:
