@@ -49,10 +49,13 @@ class RedisConnect(object):
             Asynchronously save the Redis db on disk
             In the case of an error during saving - Do not cause an exception - just log
         """
-        if self.connection.bgsave():
-            logging.info("Redis[db:%s] saved successfully" % self.connect_data['db'], exc_info=False)
-        else:
-            logging.error("Redis[db:%s] was NOT saved successfully" % self.connect_data['db'], exc_info=True)
+        try:
+            if self.connection.bgsave():
+                logging.info("Redis[db:%s] saved successfully" % self.connect_data['db'], exc_info=False)
+            else:
+                logging.error("Redis[db:%s] was NOT saved successfully" % self.connect_data['db'], exc_info=True)
+        except Exception as e:
+            pass
 
     def set(self, k):
         """
