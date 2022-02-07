@@ -74,8 +74,8 @@ def login(**kwargs: dict) -> dict:
     email = auth['email'].lower()
     password = auth['password']
 
-    user, token, refresh_token = UserDacc.login(email, password)
-    return api_response({'token': token, 'refresh_token': refresh_token, 'user': user})
+    uid, token, refresh_token = UserDacc.login(email, password)
+    return api_response({'token': token, 'refresh_token': refresh_token, 'user_id': uid, 'email': email})
 
 
 def logout(**kwargs: dict):

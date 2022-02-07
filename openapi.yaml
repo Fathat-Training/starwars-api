@@ -688,7 +688,9 @@ paths:
           content:
             application/json:
               schema:
-                 $ref: '#/components/schemas/UserTokens'
+                allOf:
+                  - $ref: '#/components/schemas/UserTokens'
+                  - $ref: '#/components/schemas/UserID'
 
       security:
         - jwt_refresh: []
@@ -832,14 +834,22 @@ components:
           description: Object's ID
 
     Email:
-      description: Email Address
-      type: string
-      pattern: ([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+
+      required:
+        - email
+      properties:
+        email:
+          description: Email Address
+          type: string
+          pattern: ([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+
 
     Password:
-      description: Password
-      type: string
-      pattern: (?=\S{8,32})(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[0-9])(?=\S*)(?<!\S)\S{8,32}(?=\s|\Z)
+      required:
+        - password
+      properties:
+        password:
+          description: Password
+          type: string
+          pattern: (?=\S{8,32})(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[0-9])(?=\S*)(?<!\S)\S{8,32}(?=\s|\Z)
 
 
 # -----------------------------------------------
@@ -1079,19 +1089,25 @@ components:
     # -----------------------------------------------
     #  User REQUEST SCHEMA
     # -----------------------------------------------
+
+    UserID:
+      required:
+        - user_id
+      properties:
+        user_id:
+          type: integer
+          description: User ID
+
     User:
       allOf:
-        - $ref: '#/components/schemas/BaseUser'
-        - properties:
-            user_id:
-              description: user's entity ID
-              type: integer
+        - $ref: '#/components/schemas/Email'
+        - $ref: '#/components/schemas/UserID'
 
-    BaseUser:
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/Email'
+#    BaseUser:
+#      type: object
+#      properties:
+#        email:
+#          $ref: '#/components/schemas/Email'
 
     # -----------------------------------------------
     #  AUTH TOKEN RESPONSE SCHEMAS
@@ -1099,6 +1115,9 @@ components:
 
     UserTokens:
       type: object
+      required:
+        - token
+        - refresh_token
       properties:
         token:
           type: string
@@ -1142,15 +1161,14 @@ components:
     UserUpdate:
       type: object
       allOf:
-        - $ref: '#/components/schemas/BaseUser'
+        - $ref: '#/components/schemas/User'
         - $ref: '#/components/schemas/AccessRole'
 
     UserLoginResponse:
+      type: object
       allOf:
         - $ref: '#/components/schemas/UserTokens'
-      properties:
-        user:
-          $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/User'
 
 #
 #    UserListResponse:
@@ -1174,14 +1192,10 @@ components:
 
     Credentials:
       type: object
-      required:
-        - password
-        - email
-      properties:
-        password:
-          $ref: '#/components/schemas/Password'
-        email:
-          $ref: '#/components/schemas/Email'
+      allOf:
+        - $ref: '#/components/schemas/Password'
+        - $ref: '#/components/schemas/Email'
+
 
 #    ResetPassword:
 #      type: object
