@@ -46,7 +46,7 @@ def signup(**kwargs: dict):
 
     # Swap the password in data for the hashed one
     data['password'] = pwd
-    UserDacc.create(data)
+    UserDacc.signup(data)
 
     return api_response()
 

@@ -3,13 +3,12 @@
 # ------------------------------------------------
 #    External imports
 # ------------------------------------------------
-from mysql.connector import connect, errors
+from mysql.connector import connect
 from mysql.connector.errors import IntegrityError
 
 # ------------------------------------------------
 #    Python Imports
 # ------------------------------------------------
-import json
 
 # ------------------------------------------------
 #    Module Imports
@@ -92,6 +91,7 @@ def db_query(sql: str, values: str):
         with db.cursor() as cur:
             # Extract row headers
             cur.execute(sql, values)
+            # Collect the column names, i.e. headers
             headers = [x[0] for x in cur.description]
             return db_json_result(cur.fetchall(), headers)
     except Exception as e:
