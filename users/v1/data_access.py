@@ -80,7 +80,7 @@ class UserDacc(object):
                 # Update the record to state user logged in
                 sql = "UPDATE users SET logged_in = %s WHERE id = %s"
                 db_insert_update(sql, (1, user['id']))
-                return user['id'], email, token, refresh_token
+                return user['id'], token, refresh_token
             else:
                 raise ApiError(message="email-unverified", status_code=400)
 
