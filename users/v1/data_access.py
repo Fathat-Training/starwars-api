@@ -34,7 +34,7 @@ class UserDacc(object):
     """
 
     @staticmethod
-    def create(data):
+    def signup(data):
         """
             Create and save a new user
 
@@ -215,7 +215,7 @@ class UserDacc(object):
 
         :param user: User to send the email.
         """
-        token = UserDacc.get_email_token(user['id'], user['access_role'], user['email'])
+        token = UserDacc.get_token(user_id=user['id'], access_role=user['access_role'], payload_claim={'email_claim': user['email']})
 
         params = {'token': token}
         verification_url = f"{request.url_root}users/v1/email_verification?" + urllib.parse.urlencode(params)
@@ -227,7 +227,7 @@ class UserDacc(object):
         try:
             send_email(user['email'], "Please verify account", message_body)
         except Exception as e:
-            raise ApiError(message="server-error", status_code=500)
+            raise ApiError(message="verification-email-not-sent", status_code=500)
 
     @staticmethod
     def verify_email(user_id, user_email: str):
@@ -300,19 +300,6 @@ class UserDacc(object):
 
         except Exception as e:
             raise e
-
-    @staticmethod
-    def get_email_token(user_id, access_role: str, user_email: str):
-        """
-            Create an email token
-
-        :param user_id: User's ID
-        :param access_role: User's access role
-        :param user_email: User's email address
-        :return: new email token
-        """
-        token = UserDacc.get_token(user_id=user_id, access_role=access_role, payload_claim={'email_claim': user_email})
-        return token
 
     @staticmethod
     def delete_user(user_id):
