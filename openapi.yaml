@@ -30,7 +30,7 @@ paths:
 
             Authorization request header
 
-              Bearer Valid Admin Access Token
+              Bearer Valid Basic Access Token
 
         Errors:
 
@@ -76,7 +76,7 @@ paths:
 
             Authorization request header
 
-              Bearer Valid Admin Access Token
+              Bearer Valid Basic Access Token
 
         Errors:
 
@@ -134,12 +134,6 @@ paths:
         - Film
       description: >
 
-        Required Headers:
-
-            Authorization request header
-
-              Bearer Valid Admin Access Token
-
         Errors:
 
             token-invalid, 401
@@ -184,7 +178,7 @@ paths:
 
             Authorization request header
 
-              Bearer Valid Admin Access Token
+              Bearer Valid Basic Access Token
 
         Errors:
 
@@ -666,7 +660,7 @@ paths:
         Required Headers:
 
           Authorization request header
-            Bearer valid Admin access token
+            Bearer Valid Basic Refresh token
 
         Errors:
 
