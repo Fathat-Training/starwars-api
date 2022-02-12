@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/af3198b7-9308-4f46-ad09-ddac806dbc91/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/data_access.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/films/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/films/v1/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/openapi.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,9 +183,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.starwars-api" />
         <item itemvalue="Python tests.Python tests for tests.Test.test_get_film_without_options" />
         <item itemvalue="Python tests.Python tests for test_endpoints.Test.test_get_films" />
-        <item itemvalue="Python.starwars-api" />
         <item itemvalue="Python.setup" />
         <item itemvalue="Python tests.Python tests for tests.Test.test_get_film_without_options" />
       </list>
@@ -253,6 +247,14 @@
       <workItem from="1644208815132" duration="9000" />
       <workItem from="1644209235714" duration="3022000" />
       <workItem from="1644219144990" duration="19404000" />
+      <workItem from="1644381834192" duration="4356000" />
+      <workItem from="1644476431899" duration="1182000" />
+      <workItem from="1644480306267" duration="3883000" />
+      <workItem from="1644554500880" duration="579000" />
+      <workItem from="1644569381241" duration="156000" />
+      <workItem from="1644579460348" duration="786000" />
+      <workItem from="1644581143788" duration="599000" />
+      <workItem from="1644647865786" duration="10276000" />
     </task>
     <task id="LOCAL-00001" summary="Chez's Working Branch">
       <created>1641553763873</created>
@@ -380,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644249008843</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token">
+      <created>1644402636041</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1644402636041</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -415,12 +424,13 @@
     <MESSAGE value="Changes made in alignment with the teach repo..." />
     <MESSAGE value="Fixes to generating new tokens - it uses a refresh_token as the authenticating token and carries the old access token in the query.&#10;&#10;Moved password prepping anc checking from auth validation to utils&#10;&#10;Caught an exception for the redis background save&#10;&#10;Modified the openAPI yaml and added a new security schema for refresh tokens&#10;&#10;Fixed/Improved some user data access..." />
     <MESSAGE value="Changed login for user - endpoint and data access layer&#10;Improved the openAPi spec for users" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed login for user - endpoint and data access layer&#10;Improved the openAPi spec for users" />
+    <MESSAGE value="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1641732299162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/starwars_api$setup.coverage" NAME="setup Coverage Results" MODIFIED="1644068104737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database/mysql" />
-    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1644252671319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1644687113510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/starwars_api$.coverage" NAME=" Coverage Results" MODIFIED="1643906782544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/films/v1" />
   </component>
 </project>
