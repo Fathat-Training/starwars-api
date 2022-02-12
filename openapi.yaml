@@ -433,7 +433,7 @@ paths:
                 $ref: '#/components/schemas/UserLoginResponse'
 
   /users/v1/logout:
-    get:
+    post:
       summary: Logout
       tags:
         - Users

@@ -45,6 +45,7 @@ def get_films(**kwargs):
     :return: List of Film Entities and total film count
     :errors:
     """
+
     permission(kwargs['token_info'], access_role='basic')
     films, count = FilmDacc.films(kwargs['options'])
 
