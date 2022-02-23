@@ -13,7 +13,20 @@
 # ------------------------------------------------
 
 from config.v1.app_config import SMTP
-import smtplib, ssl
+import smtplib
+import ssl
+
+
+def read_json_file(json_file):
+    import json
+
+    # Opening JSON file
+    with open(json_file) as jf:
+        # returns JSON object as
+        # a dictionary
+        data = json.load(jf)
+
+    return data
 
 
 def options_filter(data, options):
@@ -66,7 +79,7 @@ def dict_sort(data, sort_by: str, sort_order: str):
     int_convert = False
 
     # TODO - LET'S LEAVE THIS LINE COMMENTED AND LET STUDENTS SEE THAT THE HEIGHT IS NOT SORTED CORRECTLY AS A STRING THEN APPLY THE FOLLOWING LINE
-    # TODO TRYING TO FIGURE OUT NICE COMPREHSION FOR ABOVE cd = [i for i in data if i.get(sort_by) and int(i[sort_by])]
+    # TODO TRYING TO FIGURE OUT NICE COMPREHENSION FOR ABOVE cd = [i for i in data if i.get(sort_by) and int(i[sort_by])]
     if data[0][sort_by].isdigit():
 
         for d in data:
@@ -94,8 +107,11 @@ def dict_sort(data, sort_by: str, sort_order: str):
     return sorted_list
 
 
-def dict_excludes(data: dict, excludes: list)-> dict:
-
+def dict_excludes(data: dict, excludes: list) -> dict:
+    """
+        Exclude a set of keys from a dictionary dict - using
+        keys from the excludes list
+    """
     new_dict = {}
 
     for k, v in data.items():

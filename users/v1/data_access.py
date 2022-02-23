@@ -41,7 +41,7 @@ class UserDacc(object):
         :param data:
         :return:
         """
-        # Check there is an existing user with the same email
+        # Check if there is an existing user with the same email
         if UserDacc.user_exists_by_email(data['email']):
             raise ApiError(message="user-already-exists", status_code=400)
 

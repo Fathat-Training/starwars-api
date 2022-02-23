@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token">
+      <change afterPath="$PROJECT_DIR$/auth/test_core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/test_endpoints.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/test_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_starwars.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/films/v1/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/films/v1/endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starwars-backup-data/films.json" beforeDir="false" afterPath="$PROJECT_DIR$/starwars-backup-data/films.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starwars.py" beforeDir="false" afterPath="$PROJECT_DIR$/starwars.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/v1/data_access.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/v1/data_access.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/v1/test_userDacc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="chez" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +76,8 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RedisHelper">
@@ -80,61 +94,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.starwars-api">
-    <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="starwars-api" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/database/mysql" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/database/mysql/setup.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="starwars-api" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="starwars-api" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <EXTENSION ID="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
-        </ENTRIES>
-      </EXTENSION>
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python tests.Python tests for test_endpoints.Test">
     <configuration default="true" type="SwaggerCodegen">
       <option name="activeConfigurationType" value="FILE" />
       <option name="configurationPath" value="" />
@@ -151,43 +111,88 @@
       <option name="specificationPath" value="$PROJECT_DIR$/openapi.yaml" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_endpoints.Test.test_get_films" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_endpoints.Test" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="starwars-api" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/films/v1" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/auth" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_endpoints.Test.test_get_films&quot;" />
+      <option name="_new_target" value="&quot;test_endpoints.Test&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for tests.Test.test_get_film_without_options" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_endpoints.Test.test_decode_token" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="starwars-api" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/films/v1" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/auth" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.Test.test_get_film_without_options&quot;" />
+      <option name="_new_target" value="&quot;test_endpoints.Test.test_decode_token&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_utils.Test.test_password" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="starwars-api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/auth" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_utils.Test.test_password&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_core.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="starwars-api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/auth" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/auth/test_core.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test_starwars.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="starwars-api" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_starwars.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.starwars-api" />
-        <item itemvalue="Python tests.Python tests for tests.Test.test_get_film_without_options" />
-        <item itemvalue="Python tests.Python tests for test_endpoints.Test.test_get_films" />
-        <item itemvalue="Python.setup" />
-        <item itemvalue="Python tests.Python tests for tests.Test.test_get_film_without_options" />
+        <item itemvalue="Python tests.Python tests for test_endpoints.Test" />
+        <item itemvalue="Python tests.Python tests for test_endpoints.Test.test_decode_token" />
+        <item itemvalue="Python tests.Python tests for test_utils.Test.test_password" />
+        <item itemvalue="Python tests.Python tests in test_core.py" />
+        <item itemvalue="Python tests.Python tests in test_starwars.py" />
       </list>
     </recent_temporary>
   </component>
@@ -255,6 +260,14 @@
       <workItem from="1644579460348" duration="786000" />
       <workItem from="1644581143788" duration="599000" />
       <workItem from="1644647865786" duration="10276000" />
+      <workItem from="1644911226009" duration="1198000" />
+      <workItem from="1644989573333" duration="127000" />
+      <workItem from="1645428878299" duration="347000" />
+      <workItem from="1645451989592" duration="1000" />
+      <workItem from="1645456557853" duration="29000" />
+      <workItem from="1645505367454" duration="381000" />
+      <workItem from="1645591497291" duration="2001000" />
+      <workItem from="1645599753528" duration="12209000" />
     </task>
     <task id="LOCAL-00001" summary="Chez's Working Branch">
       <created>1641553763873</created>
@@ -428,9 +441,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Small changes to some comments in endpoints - i.e. changes Admin Token to Basic Token" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1641732299162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$tests.coverage" NAME="tests Coverage Results" MODIFIED="1645605859609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$main.coverage" NAME="main Coverage Results" MODIFIED="1645616259889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/starwars_api$setup.coverage" NAME="setup Coverage Results" MODIFIED="1644068104737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database/mysql" />
-    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1644687113510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/starwars_api$.coverage" NAME=" Coverage Results" MODIFIED="1643906782544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/films/v1" />
+    <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1645598958202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/starwars_api$.coverage" NAME=" Coverage Results" MODIFIED="1645624836258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/auth" />
   </component>
 </project>

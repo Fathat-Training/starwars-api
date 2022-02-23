@@ -32,7 +32,7 @@ class StarWars(object):
     """
         Star Wars object
         Facilitates Async Calls to the swapi api for retrieval of star wars data.
-        All methods are static helper functions with the exception of request_data.
+        All methods are static helper functions except request_data.
         The request_data function is used to retrieve star wars data and called via api
         StarWars class object instance.
     """
@@ -52,7 +52,7 @@ class StarWars(object):
         if resp.status == 200:
             data = await resp.json(content_type=None)
             print(f"Received data for {url}")
-            # Put the results data on the end of the list
+            # Put the result's data on the end of the list
             self.swars_data.extend(data['results'])
         else:
             error = f"problem with url {url}"
@@ -77,8 +77,9 @@ class StarWars(object):
 
             # waits for asyncio.gather() to be completed, required because we want to sort when all data has arrived
             await asyncio.gather(*tasks, return_exceptions=True)
-            # This has no effect - because we are using a with statement that will automatically close the session
-            # await session.close()
+
+        # This has no effect - because we are using a with statement that should automatically close the session. Use only without a with statement
+        # await session.close()
 
     def request_data_async(self, query, batch_size=None, max_items=None):
         """
@@ -124,13 +125,13 @@ class StarWars(object):
             # extracting data in json format
             self.swars_data = r.json()
 
-        except requests.ConnectionError as e:
+        except requests.ConnectionError:
             msg = "OOPS!! Connection Error. Make sure you are connected to a live Internet connection."
             raise ApiError(message=msg, status_code=status)
-        except requests.Timeout as e:
+        except requests.Timeout:
             msg = "timeout-error"
             raise ApiError(message=msg, status_code=status)
-        except requests.HTTPError as e:
+        except requests.HTTPError:
             if status == 404:
                 msg = "not-found"
             elif status == 400:
