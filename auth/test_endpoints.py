@@ -1,6 +1,6 @@
 from unittest import TestCase
-from core import generate_jwt
-from endpoints import decode_token, decode_refresh_token
+from auth.core import generate_jwt
+from auth.endpoints import decode_token, decode_refresh_token
 
 
 class Test(TestCase):
