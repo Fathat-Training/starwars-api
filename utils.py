@@ -3,22 +3,25 @@
 # ------------------------------------------------
 #    External imports
 # ------------------------------------------------
+import requests
 
 # ------------------------------------------------
 #    Python Imports
 # ------------------------------------------------
+import json
+import csv
 
 # ------------------------------------------------
 #    Module Imports
 # ------------------------------------------------
 
+from errors.v1.handlers import ApiError
 from config.v1.app_config import SMTP
 import smtplib
 import ssl
 
 
 def read_json_file(json_file):
-    import json
 
     # Opening JSON file
     with open(json_file) as jf:
@@ -58,6 +61,7 @@ def options_filter(data, options):
             if isinstance(item, dict):
                 fd = filter_options(item, options)
                 fl.append(fd)
+
     elif isinstance(data, dict):
         fd = filter_options(data, options)
         fl.append(fd)
@@ -110,7 +114,8 @@ def dict_sort(data, sort_by: str, sort_order: str):
 def dict_excludes(data: dict, excludes: list) -> dict:
     """
         Exclude a set of keys from a dictionary dict - using
-        keys from the excludes list
+        keys from the excludes list.
+        Exercise - Write this as a one liner comprehension.
     """
     new_dict = {}
 
@@ -126,9 +131,9 @@ def send_email(receiver_email, subject, message_body):
         Sends a plain-text email to receiver_email address with
         subject and message body
 
-    :param receiver_email Email address of the receiver (To)
-    :param subject Subject field of the email
-    :param message_body Body of the email.
+    :param receiver_email - Email address of the receiver (To)
+    :param subject - Subject field of the email
+    :param message_body - Body of the email.
     """
     message = f"""\
     Subject: {subject}
@@ -140,58 +145,60 @@ def send_email(receiver_email, subject, message_body):
         server.login(SMTP['sender_email'], SMTP['sender_password'])
         server.sendmail(SMTP['sender_email'], receiver_email, message)
 
+
 # ----------------------------------------------------------------
 #  THE FOLLOWING TWO FUNCTIONS MIGHT BE USED LATER
 # ----------------------------------------------------------------
-# def csv_create(data):
-#     """
-#         Generate a csv (Comma Separated) file with columns and rows from the sorted data
-#         Writes the csv file to
-#         param: data: The data to write to
-#     """
-#     swars_file = open('swars_characters.csv', 'w')
-#
-#     with swars_file:
-#         columns = ['name', 'species', 'height', 'appearances']
-#
-#         try:
-#             writer = csv.DictWriter(swars_file, fieldnames=columns)
-#             writer.writeheader()
-#
-#             # Iterate over data adding columns from the data
-#             # ******TODO CHANGE THIS TO A MORE GENERIC WRITE*********
-#             for i in data:
-#                 writer.writerow({'name': i['name'], 'species': i['species'], 'height': i['height'], 'appearances': len(i['films'])})
-#         except Exception as e:
-#             # Raise a generic error here - ideally need to be mor specific...
-#             raise ApiError(message="Problem setting writing to csv file -->" + str(e), status_code=500)
-#
-#     print("Written CSV file")
-#
-# def send_file(url, file):
-#     """
-#         Send a file to a url using requests and POST
-#         param: url - the url to send to
-#         param: csv - the file to post
-#     """
-#
-#     if type(url) is str and url is not "" and type(file) is str and file is not "":
-#         print("Sending file")
-#         url = f"{url}/post"
-#         file = {'file': open(file, 'rb')}
-#
-#         try:
-#             response = requests.post(url, files=file)
-#
-#             if response.status_code == 200:
-#                 print("File sent")
-#             else:
-#                 message = response.text
-#                 raise ApiError(message=message, status_code=response.status_code)
-#         except Exception as e:
-#             error = str(e)
-#             message = f"Sending file {file} to url {url}/post failed with an error {error}"
-#             raise ApiError(message=message)
-#     else:
-#         message = f"url {url} and file {file} should be of type str"
-#         raise ApiError(message=message)
+def csv_create(file, data):
+    """
+        Generate a csv (Comma Separated) file with columns and rows from the sorted data
+        Writes the csv file to
+        param: data: The data to write to
+    """
+    swars_file = open('swars_data.csv', 'w')
+
+    with swars_file:
+        columns = ['name', 'species', 'height', 'appearances']
+
+        try:
+            writer = csv.DictWriter(swars_file, fieldnames=columns)
+            writer.writeheader()
+
+            # Iterate over data adding columns from the data
+            # ******TODO CHANGE THIS TO A MORE GENERIC WRITE*********
+            for i in data:
+                writer.writerow({'name': i['name'], 'species': i['species'], 'height': i['height'], 'appearances': len(i['films'])})
+        except Exception as e:
+            # Raise a generic error here - ideally need to be more specific...
+            raise ApiError(message="Problem setting writing to csv file -->" + str(e), status_code=500)
+
+    print("Written CSV file")
+
+
+def send_file(url, file):
+    """
+        Send a file to a url using requests and POST
+        param: url - the url to send to
+        param: csv - the file to post
+    """
+
+    if type(url) is str and url is not "" and type(file) is str and file is not "":
+        print("Sending file")
+        url = f"{url}/post"
+        file = {'file': open(file, 'rb')}
+
+        try:
+            response = requests.post(url, files=file)
+
+            if response.status_code == 200:
+                print("File sent")
+            else:
+                message = response.text
+                raise ApiError(message=message, status_code=response.status_code)
+        except Exception as e:
+            error = str(e)
+            message = f"Sending file {file} to url {url}/post failed with an error {error}"
+            raise ApiError(message=message)
+    else:
+        message = f"url {url} and file {file} should be of type str"
+        raise ApiError(message=message)

@@ -23,10 +23,10 @@ REDIS = {
 # Parameters to connect to the SMTP server for sending emails.
 # TODO: Use a different account than "tayfun@" only for automated emails.
 SMTP = {
-    "host": "mail.privateemail.com",
+    "host": "some-host",
     "port": 465,
-    "sender_email": "tayfun@fathat.org",
-    "sender_password": "Soxpoq-joxku9-kajgot"
+    "sender_email": "some-email-address",
+    "sender_password": "some-password"
 }
 
 
