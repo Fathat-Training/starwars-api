@@ -149,28 +149,29 @@ def send_email(receiver_email, subject, message_body):
 # ----------------------------------------------------------------
 #  THE FOLLOWING TWO FUNCTIONS MIGHT BE USED LATER
 # ----------------------------------------------------------------
-def csv_create(file, data):
+def csv_create(file, columns, data):
     """
         Generate a csv (Comma Separated) file with columns and rows from the sorted data
         Writes the csv file to
         param: data: The data to write to
     """
-    swars_file = open('swars_data.csv', 'w')
-
-    with swars_file:
-        columns = ['name', 'species', 'height', 'appearances']
+    with open(file, 'w', encoding='UTF8') as f:
 
         try:
-            writer = csv.DictWriter(swars_file, fieldnames=columns)
+            writer = csv.DictWriter(f, fieldnames=columns, delimiter=',')
             writer.writeheader()
 
             # Iterate over data adding columns from the data
-            # ******TODO CHANGE THIS TO A MORE GENERIC WRITE*********
-            for i in data:
-                writer.writerow({'name': i['name'], 'species': i['species'], 'height': i['height'], 'appearances': len(i['films'])})
+            for item in data:
+                row = {}
+                for col in columns:
+                    row[col] = item[col]
+                writer.writerow(row)
+
         except Exception as e:
             # Raise a generic error here - ideally need to be more specific...
-            raise ApiError(message="Problem setting writing to csv file -->" + str(e), status_code=500)
+            print(f"Problem setting writing to csv file --> {str(e)} status_code=500")
+            raise Exception
 
     print("Written CSV file")
 
