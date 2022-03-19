@@ -8,8 +8,20 @@ Build the Docker image for the API server
 docker build -t starwars-api:latest .
 ```
 
-Run API, MYSQL, and REDIS servers with the following command
+To run API server only, use the following command:
+
+```bash
+docker run --name starwars-api -d starwars-api:latest
+```
+
+To run API, MYSQL, and REDIS servers together in one shot, use the following command
 
 ```bash
 docker-compose up -d
+```
+
+To turn down the servers, use the following command
+
+```bash
+docker-compose down
 ```
