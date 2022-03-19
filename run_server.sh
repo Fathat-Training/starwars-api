@@ -2,9 +2,8 @@
 
 set -e
 
+# Add /app to Python path for import statements find the scripts inside /app.
 export PYTHONPATH=/app:$PYTHONPATH
-
-cd /app/
 
 echo "Setting up database"
 python database/mysql/setup.py
