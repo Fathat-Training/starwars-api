@@ -3,22 +3,32 @@
     CONTAINS SYSTEM WIDE CONFIGURATIONS AND KEYS
 """
 
+# -------------------------------------------------
+#  Python Imports
+# -------------------------------------------------
+from os import environ
+
 # ---------------------------------------------------
 # DATABASE
 # ---------------------------------------------------
 
 MYSQL = {
-    'host': "localhost",
     'user': "root",
     'password': "00Apassword7",
     'database': "fathat101users"
 }
+# Use host from environment variable if specified, otherwise use the localhost as the default host.
+starwars_mysql_host = environ.get("STARWARS_MYSQL_HOST")
+MYSQL['host'] = "localhost" if starwars_mysql_host is None else starwars_mysql_host
 
 REDIS = {
-    "host": "localhost",
     'port': "6379",
     'db': "0",
-    'password': "redisrocker"}
+    'password': "redisrocker"
+}
+# Use host from environment variable if specified, otherwise use the localhost as the default host.
+starwars_redis_host = environ.get("STARWARS_REDIS_HOST")
+REDIS['host'] = "localhost" if starwars_redis_host is None else starwars_redis_host
 
 # Parameters to connect to the SMTP server for sending emails.
 # TODO: Use a different account than "tayfun@" only for automated emails.

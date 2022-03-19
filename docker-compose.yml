@@ -1,0 +1,58 @@
+# docker-compose pull
+# docker-compose up -d
+# docker-compose down
+
+version: '3'
+
+services:
+  #############################################################
+  api:
+    image: starwars-api:latest
+    hostname: starwars-api
+    environment:
+      STARWARS_API_HOST: 0.0.0.0
+      STARWARS_API_PORT: 5003
+      # This should be the hostname of the mysql service below
+      STARWARS_MYSQL_HOST: starwars-mysql
+      # This should be the hostname of the redis service below
+      STARWARS_REDIS_HOST: starwars-redis
+    expose:
+      - 5003
+    ports:
+      - 5003:5003
+    networks:
+      - service-network
+      - internal-network
+  #############################################################
+  mysql:
+    image: mysql:8.0.28-debian
+    hostname: starwars-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: fathat101users
+      MYSQL_ROOT_PASSWORD: 00Apassword7
+    volumes:
+      - mysql-data:/var/lib/mysql:rw
+    networks:
+      - internal-network
+  #############################################################
+  redis:
+    image: redis:6.2.5-alpine3.14
+    hostname: starwars-redis
+    restart: unless-stopped
+    command: redis-server --requirepass redisrocker
+    volumes:
+      - redis-data:/data:rw
+    networks:
+      - internal-network
+  #############################################################
+networks:
+  service-network:
+  internal-network:
+    # The following isolates mysql and redis servers from the Internet
+    internal: true
+  #############################################################
+volumes:
+  mysql-data:
+  redis-data:
