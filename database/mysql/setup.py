@@ -39,7 +39,7 @@ def create_user_table(db_connection):
     try:
         with db_connection.cursor() as cur:
             user = user_model()
-            create_users = "CREATE TABLE users " + user
+            create_users = "CREATE TABLE IF NOT EXISTS users " + user
             cur.execute(create_users)
             db_connection.commit()
     except Exception as e:

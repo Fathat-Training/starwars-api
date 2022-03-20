@@ -9,7 +9,7 @@ from flask_cors import CORS
 # -------------------------------------------------
 #  Python Imports
 # -------------------------------------------------
-
+from os import environ
 
 # -------------------------------------------------
 #  Module Imports
@@ -47,4 +47,13 @@ def startup():
 
 if __name__ == '__main__':
     startup()
-    app.run(host="127.0.0.1", port=5003)
+
+    # Use host from environment variable if specified, otherwise use the localhost as the default host.
+    starwars_api_host = environ.get('STARWARS_API_HOST')
+    host = "127.0.0.1" if starwars_api_host is None else starwars_api_host
+
+    # Use port from environment variable if specified, otherwise use 5003 as the default port.
+    starwars_api_port = environ.get('STARWARS_API_PORT')
+    port = 5003 if starwars_api_port is None else starwars_api_port
+
+    app.run(host=host, port=port)
