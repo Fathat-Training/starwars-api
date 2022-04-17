@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # ------------------------------------------------
-#     GAE Imports
-# ------------------------------------------------
-
-
-# ------------------------------------------------
 #    External imports
 # ------------------------------------------------
 
@@ -48,10 +43,6 @@ def get_character(character_id, **kwargs: dict) -> dict:
     character = CharacterDacc.character(character_id, kwargs['options'])
     return api_response(character)
 
-
-# ------------------------------------------------
-#          ENDPOINT FUNCTIONS START HERE
-# ------------------------------------------------
 
 def get_characters(**kwargs: dict) -> dict:
     """
