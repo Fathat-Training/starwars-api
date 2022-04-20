@@ -39,7 +39,7 @@ pycparser==2.21
 PyJWT==2.3.0
 pyparsing==3.0.6
 pyrsistent==0.18.0
-PyYAML==5.4
+PyYAML==6.0
 redis==4.1.0
 requests==2.27.1
 six==1.16.0
