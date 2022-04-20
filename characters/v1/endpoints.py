@@ -39,7 +39,6 @@ def get_character(character_id, **kwargs: dict) -> dict:
         APIError
     """
 
-    # try:
     character = CharacterDacc.character(character_id, kwargs['options'])
     return api_response(character)
 
