@@ -59,7 +59,6 @@ class StarWars(object):
         # Put the result's data on the end of the list
         self.swars_data.extend(data['results'])
 
-
     async def api_query(self, urls, **kwargs):
         """
             Set up an async task for each url in urls and call the urls asynchronously.

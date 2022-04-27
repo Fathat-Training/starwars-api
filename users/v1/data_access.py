@@ -22,11 +22,10 @@ from utils import send_email
 from flask import request
 import urllib.parse
 
-
-
 # ------------------------------------------------
 #     Abstract User Data Access Layer
 # ------------------------------------------------
+
 
 class UserDacc(object):
     """
