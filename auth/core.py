@@ -82,8 +82,6 @@ def generate_jwt(**kwargs: dict) -> str:
                 else:
                     raise Exception
 
-                payload.update(kwargs['payload_claim'])
-
             else:
                 raise ApiError('invalid-payload_claim', status_code=401)
 

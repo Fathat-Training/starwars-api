@@ -5,11 +5,9 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="added setup files that were missing">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="55dc1e20-55e0-472a-95e6-d7dabfecc085" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/core.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +74,8 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -338,7 +338,22 @@
       <workItem from="1650305153361" duration="4039000" />
       <workItem from="1650357157502" duration="30196000" />
       <workItem from="1650428996455" duration="1385000" />
-      <workItem from="1650437863049" duration="7485000" />
+      <workItem from="1650437863049" duration="8581000" />
+      <workItem from="1650515927988" duration="1205000" />
+      <workItem from="1650555960970" duration="623000" />
+      <workItem from="1650601665775" duration="1760000" />
+      <workItem from="1650689138233" duration="598000" />
+      <workItem from="1650776496353" duration="598000" />
+      <workItem from="1650803986093" duration="62000" />
+      <workItem from="1650804125082" duration="598000" />
+      <workItem from="1650861052186" duration="629000" />
+      <workItem from="1650884394644" duration="1200000" />
+      <workItem from="1650948669883" duration="966000" />
+      <workItem from="1650972792051" duration="3038000" />
+      <workItem from="1651034020747" duration="599000" />
+      <workItem from="1651034822248" duration="42000" />
+      <workItem from="1651059497849" duration="6927000" />
+      <workItem from="1651074550426" duration="589000" />
     </task>
     <task id="LOCAL-00001" summary="Chez's Working Branch">
       <created>1641553763873</created>
@@ -522,7 +537,28 @@
       <option name="project" value="LOCAL" />
       <updated>1650475691454</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Updated PyYaml to 5.4 because of an earlier versions security issue">
+      <created>1650476730704</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1650476730704</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated PyYaml to 6.0 because of an earlier versions security issue">
+      <created>1650476858520</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1650476858520</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Removed unrequired payload update when generating the JWT">
+      <created>1651074928132</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1651074928132</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +601,10 @@
     <MESSAGE value="removed unused validators folder from auth" />
     <MESSAGE value="added setup files that were missing" />
     <MESSAGE value="Removed jwt package from requirements, we use pyJWT&#10;commented out the argon2 package from requirements. Argon2-cffi is adequate&#10;Some updated package versions&#10;&#10;Removed commented out try from films endpoint code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed jwt package from requirements, we use pyJWT&#10;commented out the argon2 package from requirements. Argon2-cffi is adequate&#10;Some updated package versions&#10;&#10;Removed commented out try from films endpoint code" />
+    <MESSAGE value="Updated PyYaml to 5.4 because of an earlier versions security issue" />
+    <MESSAGE value="Updated PyYaml to 6.0 because of an earlier versions security issue" />
+    <MESSAGE value="Removed unrequired payload update when generating the JWT" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed unrequired payload update when generating the JWT" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/starwars_api$starwars_api.coverage" NAME="starwars-api Coverage Results" MODIFIED="1645598958202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
